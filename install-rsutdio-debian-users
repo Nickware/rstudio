@@ -1,0 +1,50 @@
+#!/bin/bash
+
+# Instalador de RStudio para distribuciones Debian y Ubuntu
+# Este script instala RStudio Desktop, RStudio Server y paquetes esenciales de R.
+
+# Función para verificar si un comando se ejecutó correctamente
+check_command() {
+    if [ $? -ne 0 ]; then
+        echo "Error: $1 falló. Abortando."
+        exit 1
+    fi
+}
+
+echo "Actualizando los repositorios..."
+sudo apt update && sudo apt upgrade -y
+check_command "Actualización del sistema"
+
+echo "Instalando dependencias necesarias..."
+sudo apt install -y gdebi-core wget r-base
+check_command "Instalación de dependencias"
+
+# Instalar RStudio Desktop
+echo "Descargando RStudio Desktop..."
+wget https://download1.rstudio.org/desktop/bionic/amd64/rstudio-2023.12.1-402-amd64.deb -O rstudio-desktop.deb
+check_command "Descarga de RStudio Desktop"
+
+echo "Instalando RStudio Desktop..."
+sudo gdebi -n rstudio-desktop.deb
+check_command "Instalación de RStudio Desktop"
+
+# Instalar RStudio Server (opcional)
+read -p "¿Deseas instalar RStudio Server también? (s/n): " instalar_server
+if [[ "$instalar_server" =~ ^[Ss]$ ]]; then
+    echo "Descargando RStudio Server..."
+    wget https://download2.rstudio.org/server/bionic/amd64/rstudio-server-2023.12.1-402-amd64.deb -O rstudio-server.deb
+    check_command "Descarga de RStudio Server"
+
+    echo "Instalando RStudio Server..."
+    sudo gdebi -n rstudio-server.deb
+    check_command "Instalación de RStudio Server"
+fi
+
+# Instalar paquetes esenciales de R
+echo "Instalando paquetes esenciales de R..."
+sudo R --vanilla <<EOF
+install.packages(c('shiny', 'shinydashboard', 'dplyr', 'ggplot2', 'tidyr'), repos='https://cloud.r-project.org/')
+EOF
+check_command "Instalación de paquetes de R"
+
+echo "Instalación completada con éxito. ¡RStudio está listo para usar!"
