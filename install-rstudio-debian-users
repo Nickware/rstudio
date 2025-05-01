@@ -1,7 +1,10 @@
 #!/bin/bash
-
-# Instalador de RStudio para distribuciones Debian y Ubuntu
-# Este script instala RStudio Desktop, RStudio Server y paquetes esenciales de R.
+# Instalador de RStudio 
+# Este script instala paquetes esenciales de R, RStudio Desktop 
+# Requiere privilegios de superusuario para instalar paquetes
+# Este script ha sido probado en Deepin 23.1
+# Versión 2.2 - 30/04/2025
+# Autor: N.Torres
 
 # Función para verificar si un comando se ejecutó correctamente
 check_command() {
