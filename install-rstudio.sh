@@ -1,7 +1,10 @@
 #!/bin/bash
-
 # Instalador de RStudio para distribuciones Fedora
-# Este script instala RStudio Desktop, RStudio Server y paquetes esenciales de R.
+# Este script instala paquetes esenciales de R, RStudio Desktop 
+# Requiere privilegios de superusuario para instalar paquetes
+# Este script ha sido probado en Fedora 41
+# Versión 2.2 - 30/04/2025
+# Autor: N.Torres
 
 # Función para verificar si un comando se ejecutó correctamente
 # Si el comando anterior falló (código de salida distinto de 0), muestra un mensaje de error y termina el script.
