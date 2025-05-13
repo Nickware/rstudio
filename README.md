@@ -20,7 +20,7 @@ Antes de ejecutar el script, asegúrase de tener permisos de administrador (sudo
      ```
 
 2. **Proporcionar la URL del paquete `.deb`**:
-    ## Recuerde que el archivo que debe descargar, corresponde a un archivo .deb, asociado a las distribuciones Debian o sus distribuciones derivadas
+     > Recuerde que el archivo que debe descargar, corresponde a un archivo .deb, asociado a las distribuciones Debian o sus distribuciones derivadas
    - Durante la ejecución, el script pedirá que visite la página oficial de RStudio Desktop: [https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/).
    - Debera busca el paquete `.deb` correspondiente a la arquitectura de su equipo (por ejemplo, `amd64`).
    - Copia la URL del paquete y pégala en la terminal cuando el script lo solicite.
