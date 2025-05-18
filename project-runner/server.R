@@ -20,7 +20,21 @@ shinyServer(function(input, output, session) {
     df$Fecha <- as.POSIXct(df$Fecha)
     return(df)
   })
-  
+
+  # Actualizando el selectInput para Run Info
+  observe({
+    req(datos_usuario())  
+    fechas <- unique(datos_usuario()$Fecha)
+    updateSelectInput(session, "Fecha", choices = fechas)
+  })
+
+  # Actualizando el selectInput para Cardio Info
+  observe({
+    req(datos_usuario())  
+    fechas <- unique(datos_usuario()$Fecha)
+    updateSelectInput(session, "Fecha_i2", choices = fechas)
+  })
+
   #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––#
   # Mostrar tabla del archivo cargado
   #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––#
@@ -112,6 +126,7 @@ shinyServer(function(input, output, session) {
   # Gráficos de temperatura y altura (Cardio Info)
   #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––#
   output$temperature_plot <- renderPlot({
+    validate(need(input$Fecha_i2, "Por favor, carga un archivo CSV."))
     df <- datos_usuario() %>% filter(Fecha == input$Fecha_i2)
     df_long <- df %>% gather("Tipo", "Temperatura", Temperatura.mínima, Temperatura.máxima)
     ggplot(df_long, aes(x = Tipo, y = Temperatura, fill = Tipo)) +
@@ -122,6 +137,7 @@ shinyServer(function(input, output, session) {
   })
   
   output$height_plot <- renderPlot({
+    validate(need(input$Fecha_i2, "Por favor, carga un archivo CSV."))
     df <- datos_usuario() %>% filter(Fecha == input$Fecha_i2)
     df_long <- df %>% gather("Tipo", "Altura", Altura.mínima, Altura.máxima)
     ggplot(df_long, aes(x = Tipo, y = Altura, fill = Tipo)) +
