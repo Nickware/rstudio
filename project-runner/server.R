@@ -55,6 +55,9 @@ shinyServer(function(input, output, session) {
       updateTextInput(session, "Ritmo.medio", value = selected$Ritmo.medio)
       updateNumericInput(session, "Cadencia.de.carrera.media", value = selected$Cadencia.de.carrera.media)
       updateNumericInput(session, "Longitud.media.de.zancada", value = selected$Longitud.media.de.zancada)
+      updateTextInput(session, "calorias", value = selected$calorias)
+      updateTextInput(session, "Frecuencia.cardiaca.media", value = selected$Frecuencia.cardiaca.media)
+      updateTextInput(session, "TE.aeróbico", value = selected$TE.aeróbico)
     }
   })
   
@@ -65,9 +68,9 @@ shinyServer(function(input, output, session) {
     df <- datos_usuario()
     selected <- df %>% filter(Fecha == input$Fecha_i2)
     if (nrow(selected) > 0) {
-      updateTextInput(session, "calorias", value = selected$calorias)
-      updateTextInput(session, "Frecuencia.cardiaca.media", value = selected$Frecuencia.cardiaca.media)
-      updateTextInput(session, "TE.aeróbico", value = selected$TE.aeróbico)
+      # updateTextInput(session, "calorias", value = selected$calorias)
+      # updateTextInput(session, "Frecuencia.cardiaca.media", value = selected$Frecuencia.cardiaca.media)
+      # updateTextInput(session, "TE.aeróbico", value = selected$TE.aeróbico)
     }
   })
   
