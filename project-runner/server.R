@@ -96,6 +96,45 @@ shinyServer(function(input, output, session) {
   #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––#
   # ValueBoxes (totales)
   #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––#
+  output$actividad_histograma <- renderPlot({
+    req(datos_usuario())
+
+    df <- datos_usuario() %>% arrange(Fecha)
+
+    # Convertir el texto bonito para el tooltip
+    df$tooltip <- paste0(
+      "<b> Fecha:<br> ", df$Fecha, "<br>",
+      "<b> Distancia:<br> ", df$Distancia, " km<br>",
+      "<b> Tiempo:<br>", df$Tiempo, "<br>",
+      "<b> Ritmo medio:<br>", df$Ritmo.medio, "<br>",
+      "<b> Cadencia de carrera media:<br>", df$Cadencia.de.carrera.media, "<br>",
+      "<b> Longitud media de zancada:<br>", df$Longitud.media.de.zancada, "<br>",
+      "<b> Calorías:<br> ", df$calorias, "<br>",
+      "<b> Frecuencia cardiaca media:<br> ", df$Frecuencia.cardiaca.media, "<br>",
+      "<b> TE aeróbico:<br> ", df$TE.aeróbico
+    )
+
+    p <- ggplot(df, aes(x = Fecha, y = Distancia, text = tooltip)) +
+      geom_col(fill = "#1f77b4") +
+      labs(title = "Actividades por fecha", x = "Fecha", y = "Distancia (km)") +
+      theme_minimal() +
+      theme(
+        plot.title = element_text(size = 16, face = "bold"),
+        axis.text.x = element_text(angle = 45, hjust = 1)
+      )
+
+      ggplotly(p, tooltip = "text") %>%
+      layout(
+        hoverlabel = list(
+          bgcolor = "white",
+          font = list(size = 12, color = "black")
+        ),
+        xaxis = list(title = "Fecha"),
+        yaxis = list(title = "Distancia (km)")
+      )    
+  })
+    
+  
   output$total_activities_box <- renderValueBox({
     valueBox(nrow(datos_usuario()), "Total Activities", icon = icon("list"), color = "orange")
   })

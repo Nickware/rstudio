@@ -1,5 +1,13 @@
 library(shiny)
 library(shinydashboard)
+#library(shinyjs)
+#library(shinycssloaders)
+#library(shinyWidgets)
+library(plotly)
+#library(ggplot2)
+#library(dplyr)
+#library(tidyr)
+#library(lubridate)
 
 shinyUI(dashboardPage(
   dashboardHeader(title = "Running Dashboard"),
@@ -35,13 +43,13 @@ shinyUI(dashboardPage(
     
     # 2. Información General
     tabItem(tabName = "informacion_general",
-            # box(
-            #   width = 5,
-            #   title = "Fecha",
-            #   status = "warning",
-            #   solidHeader = TRUE,
-            #   selectInput("Fecha", "Date", choices = NULL)  # se actualiza en server.R
-            # ),
+             box(
+               width = 5,
+               title = "Histograma de Actividades",
+               status = "primary",
+               solidHeader = TRUE,
+               plotlyOutput("histograma_actividades", width = "600px", height = "400px")
+             ),
             fluidRow(
               valueBoxOutput("total_activities_box"),
               valueBoxOutput("total_distance_box"),
