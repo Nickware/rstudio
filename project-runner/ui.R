@@ -16,7 +16,8 @@ shinyUI(dashboardPage(
     menuItem("Data File", tabName = "data_file", icon = icon("th")),
     menuItem("Informacion General", tabName = "informacion_general", icon = icon("dashboard")),
     menuItem("Run Info", tabName = "run_info", icon = icon("dashboard")),
-    menuItem("Cardio Info", tabName = "cardio_info", icon = icon("heart"))
+    menuItem("Cardio Info", tabName = "cardio_info", icon = icon("heart")),
+    menuItem("Comparar actividades", tabName = "comparar_actividades", icon = icon("balance-scale"))
   )),
   
   dashboardBody(tabItems(
@@ -103,7 +104,7 @@ shinyUI(dashboardPage(
             )
     ),
     
-    # 3. Información cardiovascular
+    # 4. Información cardiovascular
     tabItem(tabName = "cardio_info",
             box(
               width = 5,
@@ -122,7 +123,33 @@ shinyUI(dashboardPage(
             ),
             box(plotOutput("temperature_plot", height = 400)),
             box(plotOutput("height_plot", height = 400))
-    )
+    ), 
+
+    # 5. Comparar actividades
+    tabItem(tabName = "comparar_actividades",
+            fluidRow(
+              box(
+                width = 6,
+                title = "Actividad_1",
+                status = "primary",
+                solidHeader = TRUE,
+                selectInput("comp_fecha_1", "Fecha Actividad 1", choices = NULL),  # se actualiza en server.R
+                tableOutput("tabla_actividad_1")  # se actualiza en server.R
+              ),
+              box(
+                width = 6,
+                title = "Actividad_2",
+                status = "success",
+                solidHeader = TRUE,
+                selectInput("comp_fecha_2", "Fecha Actividad 2", choices = NULL),  # se actualiza en server.R
+                tableOutput("tabla_actividad_2")  # se actualiza en server.R
+              )
+            ),
+            fluidRow(
+              box(width = 12, title("Comparación Gráfica", status = "info"),
+              plotlyOutput("comparison_plot", height = "400px"))
+            )
+            )
   ))
 ))
 
