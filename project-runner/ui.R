@@ -146,7 +146,7 @@ shinyUI(dashboardPage(
               )
             ),
             fluidRow(
-              box(width = 12, title("Comparación Gráfica", status = "info"),
+              box(width = 12, title="Comparación Gráfica", status = "info",
               plotlyOutput("comparison_plot", height = "400px"))
             )
             )
