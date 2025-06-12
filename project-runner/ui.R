@@ -88,12 +88,6 @@ shinyUI(dashboardPage(
                   textInput("Frecuencia.cardiaca.media", "Heart rate (bpm)", value = "", width = "100%")),
               box(width = 2, title = "TE anaeróbico", background = "fuchsia", solidHeader = TRUE,
                   textInput("TE.aeróbico", "Aerobic Training Effect", value = "", width = "100%"))
-              #valueBoxOutput("total_activities_box"),
-              #valueBoxOutput("total_distance_box"),
-              #valueBoxOutput("total_time_box"),
-              #valueBoxOutput("total_average_pace_box"),
-              #valueBoxOutput("total_average_running_box"),
-              #valueBoxOutput("total_average_stride_box")
             )
     ),
     
