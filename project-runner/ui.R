@@ -1,13 +1,6 @@
 library(shiny)
 library(shinydashboard)
-#library(shinyjs)
-#library(shinycssloaders)
-#library(shinyWidgets)
 library(plotly)
-#library(ggplot2)
-#library(dplyr)
-#library(tidyr)
-#library(lubridate)
 
 shinyUI(dashboardPage(
   dashboardHeader(title = "Running Dashboard"),
@@ -113,16 +106,8 @@ shinyUI(dashboardPage(
               solidHeader = TRUE,
               selectInput("Fecha_i2", "Date", choices = NULL)  # se actualiza en server.R
             ),
-            fluidRow(
-              # box(width = 2, title = "Calorias", background = "light-blue", solidHeader = TRUE,
-              #     textInput("calorias", "Calories (Energy)", value = "", width = "100%")),
-              # box(width = 2, title = "Pulsaciones", background = "yellow", solidHeader = TRUE,
-              #     textInput("Frecuencia.cardiaca.media", "Heart rate (bpm)", value = "", width = "100%")),
-              # box(width = 2, title = "TE anaeróbico", background = "fuchsia", solidHeader = TRUE,
-              #     textInput("TE.aeróbico", "Aerobic Training Effect", value = "", width = "100%"))
-            ),
-            box(plotOutput("temperature_plot", height = 400)),
-            box(plotOutput("height_plot", height = 400))
+            box(plotOutput("temperature_plot", height = 400, width = "100%")),
+            box(plotOutput("height_plot", height = 400, width = "100%"))
     ), 
 
     # 5. Comparar actividades
