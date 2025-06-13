@@ -11,8 +11,8 @@ Esta aplicación permite cargar archivos CSV con datos de actividades de running
 - **Carga de archivos:** Carga archivos CSV con datos de running.
 - **Visualización general:** Muestra un histograma de actividades y resúmenes numéricos (número total de actividades, distancia total, tiempo total, ritmo medio, cadencia media y longitud media de zancada).
 - **Detalle de actividad:** Permite seleccionar una fecha y ver detalles específicos de una carrera (distancia, tiempo, ritmo medio, cadencia, longitud de zancada, calorías, frecuencia cardíaca, efecto de entrenamiento aeróbico).
-- **Información cardiovascular:** Visualiza gráficos relacionados con la temperatura y la altura (o cualquier otra métrica relevante según tus datos).
-- **Comparación de actividades:** Compara dos actividades seleccionadas, mostrando sus datos en tablas y un gráfico comparativo.
+- **Información cardiovascular:** Visualiza gráficos relacionados con la temperatura y la altura (o cualquier otra métrica relevante según los datos cargados).
+- **Comparación de actividades:** Compara dos actividades seleccionadas, mostrando los datos en tablas y un gráfico comparativo.
 
 
 ## Requisitos
@@ -44,13 +44,13 @@ shiny::runApp()
 ## Uso
 
 1. **Carga archivo CSV:**
-Ve a la pestaña "Data File" y seleccionar archivo CSV.
+It a la pestaña "Data File" y seleccionar archivo CSV.
 2. **Explora la información general:**
 Consultar el histograma y los resúmenes en la pestaña "Informacion General".
 3. **Consulta detalles de una actividad:**
 Seleccionar una fecha en la pestaña "Run Info" para ver detalles específicos.
 4. **Visualiza información cardiovascular:**
-Ir a la pestaña "Cardio Info" para ver gráficos relacionados.
+Hacer click en la pestaña "Cardio Info" para ver gráficos relacionados.
 5. **Compara actividades:**
 En la pestaña "Comparar actividades", selecciona dos fechas para comparar sus datos.
 
