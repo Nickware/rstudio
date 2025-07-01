@@ -2,9 +2,9 @@
 library(rvest)
 library(testthat)
 
-# 1. Scraping (Ejemplo - adaptar a tu web real)
+# 1. Scraping 
 scrapear_baloto <- function(url = "https://www.resultadobaloto.com/resultados.php") {
-  # (Implementación igual a tu versión anterior)
+  
 }
 
 # 2. Cálculo de frecuencias

@@ -10,7 +10,7 @@ function(input, output, session) {
   datos <- eventReactive(input$cargar, {
     req(input$rango_fechas)
     
-    # Simulación de scraping (en producción reemplazar con scrapear_baloto())
+    # Simulación de scraping 
     datos_ejemplo <- tibble(
       Fecha = seq(input$rango_fechas[1], input$rango_fechas[2], by = "day"),
       Balota01 = sample(1:43, length(Fecha), replace = TRUE),
