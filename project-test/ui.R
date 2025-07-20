@@ -1,20 +1,24 @@
 library(shiny)
 library(shinydashboard)
 library(DT)
+library(plotly)  # Nuevo
 
 ui <- dashboardPage(
-  dashboardHeader(title = "Sorteos Baloto"),
+  dashboardHeader(title = "Baloto Analyzer"),
   dashboardSidebar(
-    actionButton("reintentar", "Reintentar", 
-                 icon = icon("sync"),
-                 class = "btn-primary"),
+    actionButton("reintentar", "Actualizar", icon = icon("sync")),
+    uiOutput("selector_balota"),
     uiOutput("status")
   ),
   dashboardBody(
-    box(
-      title = "Ultimos registros",
+    tabBox(
       width = 12,
-      DTOutput("tabla_cruda")
+      tabPanel("Datos", DTOutput("tabla_cruda")),
+      tabPanel("Frecuencias", DTOutput("tabla_frecuencias")),
+      tabPanel("Gráfico",
+               plotlyOutput("histograma"),  # Cambiado a plotlyOutput
+               br(),
+               uiOutput("hover_info"))  # mostrar valores
     )
   )
 )

@@ -1,19 +1,12 @@
 function(input, output, session) {
-  # observe({
-  #   print("Estructura de los datos: ")
-  #   str(datos())
-  #   print("Primeras filas: ")
-  #   print(head(datos()))
-  # })
-  
-  # Usamos reactiveVal para almacenar datos y estado
+  # Reactive para datos crudos
   datos <- reactiveVal(NULL)
   error <- reactiveVal(NULL)
   
-  # Función para cargar datos (reutilizable)
+  # Carga de datos
   cargar_datos <- function() {
     tryCatch({
-      datos(obtener_datos_reales())  # Llama a tu función de global.R
+      datos(obtener_datos_reales())
       error(NULL)
     }, error = function(e) {
       error(e$message)
@@ -21,38 +14,66 @@ function(input, output, session) {
     })
   }
   
-  # Carga inicial al iniciar la app
-  observe({
-    cargar_datos()
+  # Carga inicial
+  observe(cargar_datos())
+  
+  # Botón reintentar
+  observeEvent(input$reintentar, cargar_datos())
+  
+  # Reactive para frecuencias
+  frecuencias <- reactive({
+    req(datos())
+    calcular_frecuencias(datos())
   })
   
-  # Manejador del botón reintentar 
-  observeEvent(input$reintentar, {
-    cargar_datos()
-  })
-  
-  # Renderizado de la tabla 
+  # Tabla de datos crudos
   output$tabla_cruda <- renderDT({
     req(datos())
-    
     datatable(
-      datos() %>%
-        mutate(Fecha = format(as.Date(Fecha),"%d/%m/%Y")),  # Conversión directa en R
+      mutate(datos(), Fecha = format(Fecha, "%d/%m/%Y")),
       options = list(scrollX = TRUE),
       rownames = FALSE
+    )
+  })
+  
+  # Tabla de frecuencias
+  output$tabla_frecuencias <- renderDT({
+    req(frecuencias())
+    datatable(
+      frecuencias() %>%
+        pivot_wider(
+          names_from = Numero,
+          
+          values_from = Frecuencia,
+          values_fill = 0
+        ),
+      options = list(scrollX = TRUE)
+    )
+  })
+  
+  # Gráfico de frecuencias
+  output$histograma <- renderPlotly({
+    req(frecuencias(), input$balota_seleccionada)
+    generar_grafico_interactivo(frecuencias(), input$balota_seleccionada)
+  })
+  
+  # Selector con colores representativos
+  output$selector_balota <- renderUI({
+    req(frecuencias())
+    selectInput(
+      "balota_seleccionada",
+      "Selecciona una balota:",
+      choices = unique(frecuencias()$Balota),
+      selectize = FALSE
     )
   })
   
   # Mensaje de estado
   output$status <- renderUI({
     if (!is.null(error())) {
-      div(class = "alert alert-danger",
-          h4("Error al cargar datos"),
-          p(error()),
-          p("Por favor intenta nuevamente."))
+      div(class = "alert alert-danger", error())
     } else if (is.null(datos())) {
-      div(class = "alert alert-warning",
-          "Cargando datos...")
+      div(class = "alert alert-warning", "Cargando datos...")
     } else {
       div(class = "alert alert-success",
           paste("Datos cargados:", nrow(datos()), "registros"))
