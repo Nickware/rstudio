@@ -17,7 +17,7 @@ obtener_datos_reales <- function() {
         SuperBalota = "Super Balota."
       ) %>%
       mutate(
-        Fecha = as.Date(Fecha, format = "%d-%m-%Y"),  # Ajusta el formato
+        Fecha = as.Date(Fecha, format = "%d/%m/%Y"),  # Ajusta el formato
         Combinacion = gsub(" ", "", Combinacion)
       ) %>%
       separate(

@@ -1,4 +1,11 @@
 function(input, output, session) {
+  # observe({
+  #   print("Estructura de los datos: ")
+  #   str(datos())
+  #   print("Primeras filas: ")
+  #   print(head(datos()))
+  # })
+  
   # Usamos reactiveVal para almacenar datos y estado
   datos <- reactiveVal(NULL)
   error <- reactiveVal(NULL)
@@ -30,7 +37,7 @@ function(input, output, session) {
     
     datatable(
       datos() %>%
-        mutate(Fecha = format(as.Date(Fecha), "%d/%m/%Y")),  # Conversión directa en R
+        mutate(Fecha = format(as.Date(Fecha),"%d/%m/%Y")),  # Conversión directa en R
       options = list(scrollX = TRUE),
       rownames = FALSE
     )
