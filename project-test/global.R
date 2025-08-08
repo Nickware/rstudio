@@ -11,11 +11,9 @@ obtener_datos_reales <- function() {
       html_table()
     
     tabla %>%
-      rename(
-        Fecha = 1,
-        Combinacion = "Combinación Ganadora",
-        SuperBalota = "Super Balota."
-      ) %>%
+      rename(Fecha = 1,
+             Combinacion = "Combinación Ganadora",
+             SuperBalota = "Super Balota.") %>%
       mutate(
         Fecha = as.Date(Fecha, format = "%d/%m/%Y"),
         Combinacion = gsub(" ", "", Combinacion)
@@ -35,11 +33,7 @@ obtener_datos_reales <- function() {
 calcular_frecuencias <- function(datos) {
   datos %>%
     select(-Fecha) %>%
-    pivot_longer(
-      everything(),
-      names_to = "Balota",
-      values_to = "Numero"
-    ) %>%
+    pivot_longer(everything(), names_to = "Balota", values_to = "Numero") %>%
     count(Balota, Numero, name = "Frecuencia")
 }
 
@@ -49,25 +43,68 @@ generar_grafico_interactivo <- function(frecuencias, balota_seleccionada) {
     filter(Balota == balota_seleccionada)
   
   # Paleta de colores por balota
-  colores <- c("#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b")
+  colores <- c("#1f77b4",
+               "#ff7f0e",
+               "#2ca02c",
+               "#d62728",
+               "#9467bd",
+               "#8c564b")
   names(colores) <- c(paste0("Balota0", 1:5), "SuperBalota")
   
   plot_ly(
     data = datos_grafico,
-    x = ~as.factor(Numero),
-    y = ~Frecuencia,
+    x = ~ as.factor(Numero),
+    y = ~ Frecuencia,
     type = "bar",
     color = I(colores[balota_seleccionada]),
     hoverinfo = "text",
-    text = ~paste("Número:", Numero, "<br>Frecuencia:", Frecuencia),
-    marker = list(
-      line = list(color = "rgb(8,48,107)", width = 1.5)
-    )
+    text = ~ paste("Número:", Numero, "<br>Frecuencia:", Frecuencia),
+    marker = list(line = list(color = "rgb(8,48,107)", width = 1.5))
   ) %>%
     layout(
       title = paste("Frecuencias -", balota_seleccionada),
       xaxis = list(title = "Número"),
       yaxis = list(title = "Frecuencia"),
       hoverlabel = list(bgcolor = "white")
+    )
+}
+
+# Nueva función para análisis por posición
+calcular_estadisticas_posicion <- function(datos) {
+  datos %>%
+    select(-Fecha) %>%
+    pivot_longer(everything(), names_to = "Posicion", values_to = "Numero") %>%
+    group_by(Posicion, Numero) %>%
+    summarise(Frecuencia = n(), .groups = "drop_last") %>%
+    mutate(Frecuencia_Relativa = Frecuencia / sum(Frecuencia)) %>%
+    arrange(Posicion, desc(Frecuencia))
+}
+
+# Función para heatmap
+generar_heatmap_posicion <- function(datos_estadisticas) {
+  datos_estadisticas %>%
+    plot_ly(
+      x = ~ Numero,
+      y = ~ Posicion,
+      z = ~ Frecuencia,
+      type = "heatmap",
+      colors = colorRamp(c("#FFFFFF", "#1E88E5")),
+      hoverinfo = "text",
+      text = ~ paste(
+        "<b>Posición:</b>",
+        Posicion,
+        "<br><b>Número:</b>",
+        Numero,
+        "<br><b>Frecuencia:</b>",
+        Frecuencia,
+        "<br><b>Frec. Relativa:</b>",
+        round(Frecuencia_Relativa * 100, 1),
+        "%"
+      )
+    ) %>%
+    layout(
+      xaxis = list(title = "Número"),
+      yaxis = list(title = "Posición"),
+      margin = list(l = 100)
     )
 }

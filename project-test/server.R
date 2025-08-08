@@ -75,8 +75,48 @@ function(input, output, session) {
     } else if (is.null(datos())) {
       div(class = "alert alert-warning", "Cargando datos...")
     } else {
-      div(class = "alert alert-success",
-          paste("Datos cargados:", nrow(datos()), "registros"))
+      div(class = "alert alert-success", paste("Datos cargados:", nrow(datos()), "registros"))
     }
   })
+  
+  # Reactive para estadísticas por posición
+  estadisticas_posicion <- reactive({
+    req(datos())
+    calcular_estadisticas_posicion(datos())
+  })
+  
+  # Tabla de frecuencias por posición
+  output$tabla_posicion <- renderDT({
+    req(estadisticas_posicion())
+    
+    datatable(
+      estadisticas_posicion() %>%
+        select(-Frecuencia_Relativa) %>%
+        pivot_wider(
+          names_from = Numero,
+          values_from = Frecuencia,
+          values_fill = 0
+        ),
+      options = list(
+        scrollX = TRUE,
+        pageLength = 5,
+        dom = 't'
+      ),
+      caption = "Frecuencia por Número y Posición"
+    )
+  })
+  
+  # Heatmap interactivo
+  output$heatmap_posicion <- renderPlotly({
+    req(estadisticas_posicion())
+    generar_heatmap_posicion(estadisticas_posicion())
+  })
+  
+  # Descarga de datos
+  output$descargar_posicion <- downloadHandler(
+    filename = "frecuencias_posicion.csv",
+    content = function(file) {
+      write.csv(estadisticas_posicion(), file, row.names = FALSE)
+    }
+  )
 }
