@@ -37,13 +37,13 @@ shinyUI(dashboardPage(
     
     # 2. Información General
     tabItem(tabName = "informacion_general",
-             box(
-               width = 5,
-               title = "Histograma de Actividades",
-               status = "primary",
-               solidHeader = TRUE,
-               plotlyOutput("histograma_actividades", width = "600px", height = "400px")
-             ),
+            box(
+              width = 12,  # Usar ancho completo (12 es el máximo en fluidRow)
+              title = "Histograma de Actividades",
+              status = "primary",
+              solidHeader = TRUE,
+              plotlyOutput("actividad_histograma", height = "400px")  # Solo especificar altura
+            ),
             fluidRow(
               valueBoxOutput("total_activities_box"),
               valueBoxOutput("total_distance_box"),

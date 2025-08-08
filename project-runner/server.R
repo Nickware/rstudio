@@ -114,24 +114,13 @@ shinyServer(function(input, output, session) {
       "<b> TE aeróbico:<br> ", df$TE.aeróbico
     )
 
-    p <- ggplot(df, aes(x = Fecha, y = Distancia, text = tooltip)) +
-      geom_col(fill = "#1f77b4") +
-      labs(title = "Actividades por fecha", x = "Fecha", y = "Distancia (km)") +
-      theme_minimal() +
-      theme(
-        plot.title = element_text(size = 16, face = "bold"),
-        axis.text.x = element_text(angle = 45, hjust = 1)
-      )
-
-      ggplotly(p, tooltip = "text") %>%
-      layout(
-        hoverlabel = list(
-          bgcolor = "white",
-          font = list(size = 12, color = "black")
-        ),
-        xaxis = list(title = "Fecha"),
-        yaxis = list(title = "Distancia (km)")
-      )    
+    ggplot(df, aes(x = Fecha, y = Distancia)) +
+    geom_col(fill = "#1f77b4") +
+    labs(title = "Actividades por fecha", 
+         x = "Fecha", 
+         y = "Distancia (km)") +
+    theme_minimal() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1))
   })
     
   
