@@ -1,122 +1,200 @@
-library(shiny)
-library(shinydashboard)
-library(DT)
-library(plotly)
-library(shinyjs)
-
 ui <- dashboardPage(
-  dashboardHeader(title = "Baloto Analyzer"),
+  dashboardHeader(
+    title = span("Baloto Analyzer ", 
+                 tags$small("Investigación Estadística")),
+    titleWidth = 300
+  ),
+  
   dashboardSidebar(
     sidebarMenu(
       id = "main_menu",
-      # --- MÓDULO SORTEO REAL ---
-      menuItem("Sorteo Real", 
-               icon = icon("search"), 
-               startExpanded = TRUE,
-               menuSubItem("Datos Históricos", tabName = "historico"),
-               menuSubItem("Histogramas y Frecuencias", tabName = "histograma_frecuencias"),
-               menuSubItem("Análisis por Posición", tabName = "posicion"),
-               
-               # Controles específicos del módulo
-               div(class = "sidebar-controls",
-                   actionButton("reintentar", "Actualizar Datos", 
-                                icon = icon("sync"), 
-                                style = "margin: 10px 15px; width: 85%"),
-                   uiOutput("selector_balota")
-               )
+      menuItem("Base de Datos", 
+               tabName = "datos", 
+               icon = icon("database")),
+      
+      menuItem("Análisis Univariado", 
+               icon = icon("chart-column"),
+               menuSubItem("Distribuciones", tabName = "distribuciones"),
+               menuSubItem("Tendencias", tabName = "tendencias")),
+      
+      menuItem("Análisis Multivariado", 
+               icon = icon("project-diagram"),
+               menuSubItem("Por Posición", tabName = "posicion"),
+               menuSubItem("Correlaciones", tabName = "correlaciones")),
+      
+      menuItem("Validación Estadística", 
+               icon = icon("flask"),
+               menuSubItem("Pruebas", tabName = "pruebas"),
+               menuSubItem("Aleatoriedad", tabName = "aleatoriedad")),
+      
+      div(class = "sidebar-controls",
+          actionButton("reintentar", "Actualizar Datos", 
+                       icon = icon("rotate"), 
+                       class = "btn-primary",
+                       style = "width: 90%; margin: 10px auto;"),
+          uiOutput("selector_balota")
       ),
       
-      # --- MÓDULOS FUTUROS ---
-      menuItem("Simulación", 
-               icon = icon("dice"), 
-               tabName = "simulacion"),
-      
-      menuItem("Predicción", 
-               icon = icon("chart-line"), 
-               tabName = "prediccion")
-    )
+      tags$footer(style = "padding: 10px; text-align: center;",
+                  tags$small("Versión 1.0 - © 2023"))
+    ),
+    width = 250
   ),
   
   dashboardBody(
-    useShinyjs(),  # Para mostrar/ocultar controles
-    tabItems(
-      # --- DATOS HISTÓRICOS ---
-      tabItem(tabName = "historico",
-              box(title = "Datos Completos de Sorteos",
-                  DTOutput("tabla_cruda"),
-                  width = 12,
-                  status = "primary")
-      ),
-      
-      # --- HISTOGRAMA Y FRECUENCIAS GLOBALES (COMBINADOS) ---
-      tabItem(tabName = "histograma_frecuencias",
-              fluidRow(
-                box(title = "Distribución por Balota (Histogramas)",
-                    plotlyOutput("histograma"),
-                    width = 12,
-                    status = "primary")
-              ),
-              fluidRow(
-                box(title = "Conteo de Números (Frecuencias Globales)",
-                    DTOutput("tabla_frecuencias"),
-                    width = 12,
-                    status = "primary")
-              )
-      ),
-      
-      # --- ANÁLISIS POR POSICIÓN ---
-      tabItem(tabName = "posicion",
-              fluidRow(
-                box(title = "Heatmap de Frecuencias por Posición",
-                    plotlyOutput("heatmap_posicion"),
-                    width = 12,
-                    status = "info",
-                    footer = "Cada celda muestra la frecuencia del número en esa posición")
-              ),
-              fluidRow(
-                box(title = "Tabla Detallada por Posición",
-                    DTOutput("tabla_posicion"),
-                    width = 12,
-                    status = "info",
-                    footer = downloadButton("descargar_posicion", 
-                                            "Exportar CSV",
-                                            style = "width:100%;"))
-              )
-      ),
-      
-      # --- MÓDULOS FUTUROS (Placeholders) ---
-      tabItem(tabName = "simulacion",
-              h3("Módulo de Simulación en Desarrollo",
-                 style = "text-align: center; margin-top: 100px;")),
-      
-      tabItem(tabName = "prediccion",
-              h3("Módulo de Predicción en Desarrollo",
-                 style = "text-align: center; margin-top: 100px;"))
-    ),
-    
-    # Estilos CSS personalizados
+    useShinyjs(),
     tags$head(
+      tags$link(rel = "stylesheet", href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"),
       tags$style(HTML("
+        /* Estilos personalizados */
+        .main-header .logo {
+          font-weight: 300;
+          font-size: 1.2em;
+        }
         .sidebar-controls {
-          background: #f8f9fa;
-          padding: 10px;
-          margin: 10px;
+          background: rgba(0,0,0,0.05);
+          padding: 10px 5px;
+          margin: 10px 5px;
           border-radius: 5px;
-          border: 1px solid #dee2e6;
         }
         .box-title {
-          font-weight: bold !important;
+          font-weight: 400 !important;
+          font-size: 1.1em;
         }
-        #descargar_posicion {
-          background-color: #28a745;
-          color: white;
-          border: none;
-        }
-        /* Espaciado entre boxes */
         .box {
-          margin-bottom: 20px;
+          margin-top: 5px;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .nav-tabs-custom {
+          box-shadow: none;
+        }
+        .info-box {
+          box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .content-wrapper {
+          background-color: #f9f9f9;
         }
       "))
+    ),
+    
+    tabItems(
+      # 1. BASE DE DATOS
+      tabItem(tabName = "datos",
+              fluidRow(
+                box(title = "Conjunto de Datos Completos",
+                    width = 12,
+                    status = "primary",
+                    solidHeader = TRUE,
+                    helpText("Datos históricos de todos los sorteos registrados. Filtre por fechas usando los controles superiores."),
+                    DTOutput("tabla_cruda"),
+                    footer = "Fuente oficial: Baloto Colombia. Última actualización: ", 
+                    textOutput("fecha_actualizacion", inline = TRUE))
+              )
+      ),
+      
+      # 2.1 DISTRIBUCIONES (UNIVARIADO)
+      tabItem(tabName = "distribuciones",
+              fluidRow(
+                box(title = "Distribución de Frecuencias",
+                    width = 6,
+                    status = "info",
+                    plotlyOutput("histograma"),
+                    footer = "Histograma interactivo de frecuencias absolutas."),
+                
+                box(title = "Medidas de Posición",
+                    width = 6,
+                    status = "info",
+                    plotlyOutput("boxplot_posiciones"),
+                    footer = "Diagramas de caja por posición en el sorteo.")
+              ),
+              fluidRow(
+                box(title = "Estadísticos Descriptivos",
+                    width = 12,
+                    status = "info",
+                    DTOutput("tabla_frecuencias"),
+                    footer = "Medidas de tendencia central y dispersión para cada número.")
+              )
+      ),
+      
+      # 2.2 TENDENCIAS (UNIVARIADO)
+      tabItem(tabName = "tendencias",
+              fluidRow(
+                box(title = "Series Temporales",
+                    width = 12,
+                    status = "info",
+                    plotlyOutput("series_temporales"),
+                    footer = "Evolución de frecuencias acumuladas a través del tiempo.")
+              )
+      ),
+      
+      # 3.1 ANÁLISIS POR POSICIÓN (MULTIVARIADO)
+      tabItem(tabName = "posicion",
+              fluidRow(
+                box(title = "Mapa de Calor por Posición",
+                    width = 12,
+                    status = "danger",
+                    plotlyOutput("heatmap_posicion"),
+                    footer = "Frecuencia relativa de cada número en cada posición.")
+              ),
+              fluidRow(
+                box(title = "Tabla de Contingencia",
+                    width = 12,
+                    status = "danger",
+                    DTOutput("tabla_posicion"),
+                    footer = "Frecuencias observadas por posición.")
+              )
+      ),
+      
+      # 3.2 CORRELACIONES (MULTIVARIADO)
+      tabItem(tabName = "correlaciones",
+              fluidRow(
+                box(title = "Matriz de Correlación",
+                    width = 6,
+                    status = "danger",
+                    plotlyOutput("matriz_correlacion"),
+                    footer = "Coeficientes de correlación entre posiciones."),
+                
+                box(title = "Análisis de Autocorrelación",
+                    width = 6,
+                    status = "danger",
+                    plotOutput("acf_plots"),
+                    footer = "Función de autocorrelación para validar independencia.")
+              )
+      ),
+      
+      # 4.1 PRUEBAS ESTADÍSTICAS
+      tabItem(tabName = "pruebas",
+              fluidRow(
+                box(title = "Pruebas de Uniformidad",
+                    width = 6,
+                    status = "warning",
+                    verbatimTextOutput("resultados_tests"),
+                    footer = "Resultados de Chi-cuadrado y Kolmogorov-Smirnov."),
+                
+                box(title = "Gráficos de Control",
+                    width = 6,
+                    status = "warning",
+                    plotOutput("grafico_control"),
+                    footer = "Límites 3σ para frecuencias observadas vs esperadas.")
+              )
+      ),
+      
+      # 4.2 ALEATORIEDAD
+      tabItem(tabName = "aleatoriedad",
+              fluidRow(
+                box(title = "Test de Rachas",
+                    width = 6,
+                    status = "warning",
+                    verbatimTextOutput("test_rachas"),
+                    footer = "Prueba de aleatoriedad basada en secuencias."),
+                
+                box(title = "Test de Permutaciones",
+                    width = 6,
+                    status = "warning",
+                    verbatimTextOutput("test_permutaciones"),
+                    footer = "Validación de patrones mediante permutaciones aleatorias.")
+              )
+      )
     )
   )
 )
