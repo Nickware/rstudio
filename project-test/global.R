@@ -108,3 +108,52 @@ generar_heatmap_posicion <- function(datos_estadisticas) {
       margin = list(l = 100)
     )
 }
+
+
+# Función para preparar datos para boxplots (Funcion)
+preparar_datos_boxplot <- function(datos) {
+  datos %>%
+    select(-Fecha) %>%
+    pivot_longer(
+      cols = everything(),
+      names_to = "Posicion",
+      values_to = "Numero"
+    ) %>%
+    mutate(
+      Posicion = factor(Posicion, 
+                        levels = c(paste0("Balota0", 1:5), "SuperBalota"),
+                        labels = c("Balota 1", "Balota 2", "Balota 3", 
+                                   "Balota 4", "Balota 5", "SuperBalota"))
+    )
+}
+
+# Función para generar boxplot
+generar_boxplot_posiciones <- function(datos_boxplot) {
+  # Paleta de colores personalizada
+  colores <- c("#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b")
+  
+  datos_boxplot %>%
+    plot_ly() %>%
+    add_trace(
+      x = ~Posicion,
+      y = ~Numero,
+      color = ~Posicion,
+      colors = colores,
+      type = "box",
+      boxpoints = "suspectedoutliers",  # Solo muestra outliers sospechosos
+      marker = list(
+        color = "rgb(8,48,107)",
+        outliercolor = "rgba(219, 64, 82, 0.6)",
+        line = list(outliercolor = "rgba(219, 64, 82, 0.6)", 
+                    outlierwidth = 2)
+      ),
+      line = list(color = "rgb(8,48,107)")
+    ) %>%
+    layout(
+      title = list(text = "<b>Distribución por Posición</b>", x = 0.5),
+      xaxis = list(title = "Posición en el Sorteo"),
+      yaxis = list(title = "Valor del Número"),
+      showlegend = FALSE,
+      hovermode = "compare"
+    )
+}

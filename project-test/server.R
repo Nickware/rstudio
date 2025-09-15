@@ -119,4 +119,34 @@ function(input, output, session) {
       write.csv(estadisticas_posicion(), file, row.names = FALSE)
     }
   )
+  ##
+  # Reactive para datos de boxplot
+  datos_boxplot <- reactive({
+    req(datos())
+    preparar_datos_boxplot(datos())
+  })
+  
+  # Output para el boxplot
+  output$boxplot_posiciones <- renderPlotly({
+    req(datos_boxplot())
+    generar_boxplot_posiciones(datos_boxplot())
+  })
+  
+  # Output para estadísticas descriptivas (opcional)
+  output$estadisticas_boxplot <- renderPrint({
+    req(datos_boxplot())
+    
+    datos_boxplot() %>%
+      group_by(Posicion) %>%
+      summarise(
+        Min = min(Numero),
+        Q1 = quantile(Numero, 0.25),
+        Mediana = median(Numero),
+        Q3 = quantile(Numero, 0.75),
+        Max = max(Numero),
+        Media = mean(Numero),
+        SD = sd(Numero),
+        .groups = "drop"
+      )
+  })
 }
