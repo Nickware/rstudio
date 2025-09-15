@@ -1,3 +1,9 @@
+library(shiny)
+library(shinydashboard)
+library(DT)
+library(plotly)
+library(shinyjs)
+
 ui <- dashboardPage(
   dashboardHeader(
     title = span("Baloto Analyzer ", 
@@ -74,6 +80,13 @@ ui <- dashboardPage(
         .content-wrapper {
           background-color: #f9f9f9;
         }
+        .btn-download {
+          background-color: #28a745;
+          color: white;
+          border: none;
+          width: 100%;
+          margin-top: 10px;
+        }
       "))
     ),
     
@@ -127,21 +140,42 @@ ui <- dashboardPage(
               )
       ),
       
-      # 3.1 ANÁLISIS POR POSICIÓN (MULTIVARIADO)
+      # 3.1 ANÁLISIS POR POSICIÓN (MULTIVARIADO) - ACTUALIZADO
       tabItem(tabName = "posicion",
               fluidRow(
                 box(title = "Mapa de Calor por Posición",
-                    width = 12,
+                    width = 6,
                     status = "danger",
+                    solidHeader = TRUE,
                     plotlyOutput("heatmap_posicion"),
-                    footer = "Frecuencia relativa de cada número en cada posición.")
+                    footer = "Frecuencia relativa de cada número en cada posición. Pase el mouse para ver detalles."),
+                
+                box(title = "Distribución por Balota",
+                    width = 6,
+                    status = "danger",
+                    solidHeader = TRUE,
+                    plotlyOutput("histograma_posicion"),
+                    footer = "Comparación de distribuciones entre diferentes posiciones.")
               ),
               fluidRow(
-                box(title = "Tabla de Contingencia",
-                    width = 12,
+                box(title = "Tabla de Contingencia Detallada",
+                    width = 8,
                     status = "danger",
+                    solidHeader = TRUE,
                     DTOutput("tabla_posicion"),
-                    footer = "Frecuencias observadas por posición.")
+                    footer = "Frecuencias observadas por posición. Use búsqueda para filtrar."),
+                
+                box(title = "Acciones",
+                    width = 4,
+                    status = "danger",
+                    solidHeader = TRUE,
+                    downloadButton("descargar_posicion", "Exportar CSV", 
+                                   class = "btn-download"),
+                    br(),
+                    actionButton("actualizar_analisis", "Actualizar Análisis",
+                                 icon = icon("refresh"),
+                                 style = "width: 100%; margin-top: 10px;"),
+                    footer = "Descargue los datos completos del análisis.")
               )
       ),
       
