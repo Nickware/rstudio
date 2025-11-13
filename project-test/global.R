@@ -1,26 +1,28 @@
 library(rvest)
 library(tidyverse)
-library(ggplot2)
+library(plotly)
 
+# Función principal de scraping
 obtener_datos_reales <- function() {
   tryCatch({
     url <- "https://www.resultadobaloto.com/resultados.php"
-    tabla <- read_html(url) %>%
-      html_nodes("table") %>%
-      .[[2]] %>%
+    tabla <- read_html(url) %>% 
+      html_nodes("table") %>% 
+      .[[2]] %>% 
       html_table()
     
     tabla %>%
-      rename(Fecha = 1,
-             Combinacion = "Combinación Ganadora",
-             SuperBalota = "Super Balota.") %>%
+      rename(
+        Fecha = 1,
+        Combinacion = "Combinación Ganadora",
+        SuperBalota = "Super Balota."
+      ) %>%
       mutate(
         Fecha = as.Date(Fecha, format = "%d/%m/%Y"),
         Combinacion = gsub(" ", "", Combinacion)
       ) %>%
       separate(
         Combinacion,
-        
         into = paste0("Balota0", 1:5),
         sep = "\\|",
         convert = TRUE
@@ -30,76 +32,53 @@ obtener_datos_reales <- function() {
   })
 }
 
+# Cálculo de frecuencias globales
 calcular_frecuencias <- function(datos) {
   datos %>%
     select(-Fecha) %>%
-    pivot_longer(everything(), names_to = "Balota", values_to = "Numero") %>%
+    pivot_longer(
+      cols = everything(),
+      names_to = "Balota",
+      values_to = "Numero"
+    ) %>%
     count(Balota, Numero, name = "Frecuencia")
 }
 
-# Función para gráficos interactivos
-generar_grafico_interactivo <- function(frecuencias, balota_seleccionada) {
-  datos_grafico <- frecuencias %>%
-    filter(Balota == balota_seleccionada)
-  
-  # Paleta de colores por balota
-  colores <- c("#1f77b4",
-               "#ff7f0e",
-               "#2ca02c",
-               "#d62728",
-               "#9467bd",
-               "#8c564b")
-  names(colores) <- c(paste0("Balota0", 1:5), "SuperBalota")
-  
-  plot_ly(
-    data = datos_grafico,
-    x = ~ as.factor(Numero),
-    y = ~ Frecuencia,
-    type = "bar",
-    color = I(colores[balota_seleccionada]),
-    hoverinfo = "text",
-    text = ~ paste("Número:", Numero, "<br>Frecuencia:", Frecuencia),
-    marker = list(line = list(color = "rgb(8,48,107)", width = 1.5))
-  ) %>%
-    layout(
-      title = paste("Frecuencias -", balota_seleccionada),
-      xaxis = list(title = "Número"),
-      yaxis = list(title = "Frecuencia"),
-      hoverlabel = list(bgcolor = "white")
-    )
-}
-
-# Nueva función para análisis por posición
+# Función para análisis por posición
 calcular_estadisticas_posicion <- function(datos) {
   datos %>%
     select(-Fecha) %>%
-    pivot_longer(everything(), names_to = "Posicion", values_to = "Numero") %>%
+    pivot_longer(
+      everything(),
+      names_to = "Posicion",
+      values_to = "Numero"
+    ) %>%
     group_by(Posicion, Numero) %>%
-    summarise(Frecuencia = n(), .groups = "drop_last") %>%
-    mutate(Frecuencia_Relativa = Frecuencia / sum(Frecuencia)) %>%
+    summarise(
+      Frecuencia = n(),
+      .groups = "drop_last"
+    ) %>%
+    mutate(
+      Frecuencia_Relativa = Frecuencia / sum(Frecuencia)
+    ) %>%
     arrange(Posicion, desc(Frecuencia))
 }
 
-# Función para heatmap
+# Función para heatmap de posición
 generar_heatmap_posicion <- function(datos_estadisticas) {
   datos_estadisticas %>%
     plot_ly(
-      x = ~ Numero,
-      y = ~ Posicion,
-      z = ~ Frecuencia,
+      x = ~Numero,
+      y = ~Posicion,
+      z = ~Frecuencia,
       type = "heatmap",
       colors = colorRamp(c("#FFFFFF", "#1E88E5")),
       hoverinfo = "text",
-      text = ~ paste(
-        "<b>Posición:</b>",
-        Posicion,
-        "<br><b>Número:</b>",
-        Numero,
-        "<br><b>Frecuencia:</b>",
-        Frecuencia,
-        "<br><b>Frec. Relativa:</b>",
-        round(Frecuencia_Relativa * 100, 1),
-        "%"
+      text = ~paste(
+        "<b>Posición:</b>", Posicion,
+        "<br><b>Número:</b>", Numero,
+        "<br><b>Frecuencia:</b>", Frecuencia,
+        "<br><b>Frec. Relativa:</b>", round(Frecuencia_Relativa * 100, 1), "%"
       )
     ) %>%
     layout(
@@ -109,8 +88,7 @@ generar_heatmap_posicion <- function(datos_estadisticas) {
     )
 }
 
-
-# Función para preparar datos para boxplots (Funcion)
+# Función para preparar datos de boxplot
 preparar_datos_boxplot <- function(datos) {
   datos %>%
     select(-Fecha) %>%
@@ -121,39 +99,139 @@ preparar_datos_boxplot <- function(datos) {
     ) %>%
     mutate(
       Posicion = factor(Posicion, 
-                        levels = c(paste0("Balota0", 1:5), "SuperBalota"),
-                        labels = c("Balota 1", "Balota 2", "Balota 3", 
-                                   "Balota 4", "Balota 5", "SuperBalota"))
+                       levels = c(paste0("Balota0", 1:5), "SuperBalota"),
+                       labels = c("Balota 1", "Balota 2", "Balota 3", 
+                                 "Balota 4", "Balota 5", "SuperBalota"))
     )
 }
 
 # Función para generar boxplot
 generar_boxplot_posiciones <- function(datos_boxplot) {
-  # Paleta de colores personalizada
-  colores <- c("#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b")
-  
   datos_boxplot %>%
-    plot_ly() %>%
-    add_trace(
+    plot_ly(
       x = ~Posicion,
       y = ~Numero,
       color = ~Posicion,
-      colors = colores,
       type = "box",
-      boxpoints = "suspectedoutliers",  # Solo muestra outliers sospechosos
+      boxpoints = "all",
+      jitter = 0.3,
+      pointpos = -1.8,
+      hoverinfo = "y",
       marker = list(
-        color = "rgb(8,48,107)",
-        outliercolor = "rgba(219, 64, 82, 0.6)",
-        line = list(outliercolor = "rgba(219, 64, 82, 0.6)", 
-                    outlierwidth = 2)
+        size = 4,
+        opacity = 0.7
       ),
-      line = list(color = "rgb(8,48,107)")
+      line = list(width = 2)
     ) %>%
     layout(
-      title = list(text = "<b>Distribución por Posición</b>", x = 0.5),
+      title = "Distribución de Números por Posición",
       xaxis = list(title = "Posición en el Sorteo"),
       yaxis = list(title = "Valor del Número"),
       showlegend = FALSE,
-      hovermode = "compare"
+      margin = list(l = 50, r = 50, b = 50, t = 50)
     )
+}
+
+# Función para series temporales (promedios acumulados)
+preparar_series_temporales <- function(datos) {
+  datos %>%
+    arrange(Fecha) %>%
+    mutate(
+      # Calcular promedio acumulado para cada balota
+      across(starts_with("Balota") | contains("SuperBalota"), 
+             ~ cummean(.), 
+             .names = "Promedio_{.col}")
+    ) %>%
+    select(Fecha, starts_with("Promedio_")) %>%
+    pivot_longer(
+      cols = -Fecha,
+      names_to = "Balota",
+      values_to = "Promedio_Acumulado"
+    ) %>%
+    mutate(
+      Balota = str_remove(Balota, "Promedio_"),
+      Balota = factor(Balota,
+                     levels = c(paste0("Balota0", 1:5), "SuperBalota"),
+                     labels = c("Balota 1", "Balota 2", "Balota 3", 
+                               "Balota 4", "Balota 5", "SuperBalota"))
+    )
+}
+
+# Función para medias móviles (sin zoo)
+preparar_medias_moviles <- function(datos, ventana = 20) {
+  # Función para calcular media móvil manualmente
+  calcular_media_movil <- function(x, n) {
+    stats::filter(x, rep(1/n, n), sides = 1)
+  }
+  
+  datos %>%
+    arrange(Fecha) %>%
+    mutate(
+      across(starts_with("Balota") | contains("SuperBalota"), 
+             ~ calcular_media_movil(., ventana),
+             .names = "MM_{.col}")
+    ) %>%
+    select(Fecha, starts_with("MM_")) %>%
+    pivot_longer(
+      cols = -Fecha,
+      names_to = "Balota",
+      values_to = "Media_Movil"
+    ) %>%
+    mutate(
+      Balota = str_remove(Balota, "MM_"),
+      Balota = factor(Balota,
+                     levels = c(paste0("Balota0", 1:5), "SuperBalota"),
+                     labels = c("Balota 1", "Balota 2", "Balota 3", 
+                               "Balota 4", "Balota 5", "SuperBalota"))
+    ) %>%
+    filter(!is.na(Media_Movil))
+}
+
+# Función para generar gráfico de series temporales
+generar_grafico_series <- function(datos_series, tipo = "acumuladas") {
+  if (tipo == "acumuladas") {
+    plot_ly(datos_series) %>%
+      add_trace(
+        x = ~Fecha,
+        y = ~Promedio_Acumulado,
+        color = ~Balota,
+        type = "scatter",
+        mode = "lines",
+        line = list(width = 2),
+        hoverinfo = "text",
+        text = ~paste(
+          "<b>Fecha:</b>", format(Fecha, "%d/%m/%Y"),
+          "<br><b>Balota:</b>", Balota,
+          "<br><b>Promedio Acumulado:</b>", round(Promedio_Acumulado, 1)
+        )
+      ) %>%
+      layout(
+        title = "Promedio Acumulado por Balota",
+        xaxis = list(title = "Fecha"),
+        yaxis = list(title = "Valor Promedio"),
+        hovermode = "x unified"
+      )
+  } else {
+    plot_ly(datos_series) %>%
+      add_trace(
+        x = ~Fecha,
+        y = ~Media_Movil,
+        color = ~Balota,
+        type = "scatter",
+        mode = "lines",
+        line = list(width = 2),
+        hoverinfo = "text",
+        text = ~paste(
+          "<b>Fecha:</b>", format(Fecha, "%d/%m/%Y"),
+          "<br><b>Balota:</b>", Balota,
+          "<br><b>Media Móvil:</b>", round(Media_Movil, 1)
+        )
+      ) %>%
+      layout(
+        title = "Medias Móviles por Balota",
+        xaxis = list(title = "Fecha"),
+        yaxis = list(title = "Valor Promedio"),
+        hovermode = "x unified"
+      )
+  }
 }

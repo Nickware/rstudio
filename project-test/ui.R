@@ -149,15 +149,34 @@ ui <- dashboardPage(
       )),
       
       # 2.2 TENDENCIAS (UNIVARIADO)
-      tabItem(tabName = "tendencias", fluidRow(
-        box(
-          title = "Series Temporales",
-          width = 12,
-          status = "info",
-          plotlyOutput("series_temporales"),
-          footer = "Evolución de frecuencias acumuladas a través del tiempo."
-        )
-      )),
+      tabItem(tabName = "tendencias",
+        fluidRow(
+          box(
+            title = "Controles de Análisis",
+            width = 3,
+            status = "info",
+            uiOutput("selector_tendencia"),
+            sliderInput("ventana_movil", "Ventana Medias Móviles:",
+                       min = 5, max = 50, value = 15, step = 5),
+            footer = "Seleccione el tipo de análisis temporal."
+          ),
+          box(
+            title = "Series Temporales",
+            width = 9,
+            status = "info",
+            plotlyOutput("grafico_tendencias"),
+            footer = "Evolución de frecuencias a través del tiempo. Use el slider para zoom."
+          )
+        ),
+        fluidRow(
+          box(
+            title = "Estadísticas de Tendencia",
+            width = 12,
+            status = "info",
+            DTOutput("tabla_tendencias"),
+            footer = "Resumen de tendencias por balota (pendiente, R², significancia)."
+          )
+        )),
       
       # 3.1 ANÁLISIS POR POSICIÓN (MULTIVARIADO) - ACTUALIZADO
       tabItem(tabName = "posicion", fluidRow(
