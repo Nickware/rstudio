@@ -1,16 +1,16 @@
-# **Proyecto Baloto Analyzer**
+# Proyecto Baloto Analyzer
 
-##  **Estado Actual: FASE 1 COMPLETADA**
+##  Estado Actual: FASE 1 COMPLETADA
 
-### ** Arquitectura Implementada**
+### Arquitectura Implementada
 
-#### **Módulos Principales:**
-1. ** BASE DE DATOS** - Fuente única de verdad
-2. ** ANÁLISIS UNIVARIADO** - Estadísticas individuales
-3. ** ANÁLISIS MULTIVARIADO** - Relaciones entre variables
-4. ** VALIDACIÓN ESTADÍSTICA** - Pruebas de hipótesis
+#### Módulos Principales:
+1. BASE DE DATOS - Fuente única de verdad
+2. ANÁLISIS UNIVARIADO - Estadísticas individuales
+3. ANÁLISIS MULTIVARIADO - Relaciones entre variables
+4. VALIDACIÓN ESTADÍSTICA - Pruebas de hipótesis
 
-#### **Tecnología:**
+#### Tecnología:
 - **Frontend**: Shiny Dashboard + Plotly + DT
 - **Backend**: R + Tidyverse
 - **Datos**: Web scraping en tiempo real
@@ -18,48 +18,48 @@
 
 ---
 
-##  **FUNCIONALIDADES IMPLEMENTADAS**
+##  FUNCIONALIDADES IMPLEMENTADAS
 
-### **1.  BASE DE DATOS**
+### 1.  BASE DE DATOS
 -  **Scraping automático** desde resultadobaloto.com
 -  **Limpieza y validación** de datos
 -  **Tabla interactiva** con todos los sorteos históricos
 -  **Actualización manual** con un botón
 
-### **2.  ANÁLISIS UNIVARIADO**
+### 2.  ANÁLISIS UNIVARIADO
 
-#### **Distribuciones:**
+#### Distribuciones:
 -  **Histogramas interactivos** por balota
 -  **Diagramas de caja** por posición
 -  **Estadísticos descriptivos** completos
 -  **Frecuencias globales** tabuladas
 
-#### **Tendencias:**
+#### Tendencias:
 -  **Series temporales** de promedios acumulados
 -  **Medias móviles** configurables
 -  **Visualización comparativa** entre balotas
 
-### **3.  ANÁLISIS MULTIVARIADO**
+### 3.  ANÁLISIS MULTIVARIADO
 
-#### **Por Posición:**
+#### Por Posición:
 -  **Heatmap interactivo** frecuencias vs posición
 -  **Tabla de contingencia** detallada
 -  **Histogramas comparativos** entre posiciones
 -  **Exportación** a CSV
 
-#### **Correlaciones:**
+#### Correlaciones:
 -  *En desarrollo* - Matriz de correlación
 -  *En desarrollo* - Autocorrelación
 
-### **4.  VALIDACIÓN ESTADÍSTICA**
+### 4.  VALIDACIÓN ESTADÍSTICA
 -  *En desarrollo* - Pruebas de uniformidad
 -  *En desarrollo* - Test de aleatoriedad
 
 ---
 
-##  **EXPERIENCIA DE USUARIO**
+##  EXPERIENCIA DE USUARIO
 
-### **Interfaz:**
+### **Interfaz:
 -  **Menú jerárquico** organizado por módulos
 -  **Navegación intuitiva** entre pestañas
 -  **Controles contextuales** (solo donde son relevantes)
