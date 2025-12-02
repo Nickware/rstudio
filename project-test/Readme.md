@@ -59,13 +59,13 @@
 
 ##  EXPERIENCIA DE USUARIO
 
-### **Interfaz:
+### Interfaz:
 -  **Menú jerárquico** organizado por módulos
 -  **Navegación intuitiva** entre pestañas
 -  **Controles contextuales** (solo donde son relevantes)
 -  **Responsive design** adaptable a diferentes pantallas
 
-### **Interactividad:**
+### Interactividad:
 -  **Tooltips informativos** en todos los gráficos
 -  **Filtros dinámicos** y selectores
 -  **Zoom y pan** en series temporales
@@ -73,9 +73,9 @@
 
 ---
 
-##  **CAPACIDADES ANALÍTICAS ACTUALES**
+##  CAPACIDADES ANALÍTICAS ACTUALES
 
-### **Detección de Patrones:**
+### Detección de Patrones:
 ```r
 # Ejemplo de insights que puede generar:
 - "El número 7 aparece 12 veces en Balota 1 (frecuencia atípica)"
@@ -83,77 +83,77 @@
 - "Tendencia alcista en Balota 3 últimos 20 sorteos"
 ```
 
-### **Validación de Supuestos:**
+### Validación de Supuestos:
 - Distribución esperada vs observada
 - Independencia entre sorteos
 - Uniformidad por posición
 
-### **Visualización Profesional:**
+### Visualización Profesional:
 - Heatmaps con escala de colores
 - Boxplots con medidas de dispersión
 - Series temporales con rangeslider
 
 ---
 
-##  **LOGROS TÉCNICOS**
+##  LOGROS TÉCNICOS
 
-### **Código:**
+### Código:
 -  **Arquitectura modular** y escalable
 -  **Manejo robusto** de errores
 -  **Funciones puras** y reactivas
 -  **Sin dependencias** externas problemáticas
 
-### **Datos:**
+### Datos:
 -  **Pipeline automatizado** de adquisición
 -  **Transformaciones** eficientes con dplyr
 -  **Estructura consistente** en todos los análisis
 
-### **Performance:**
+### Performance:
 -  **Carga rápida** de visualizaciones
 -  **Interactividad** sin lag
 -  **Manejo eficiente** de datos en memoria
 
 ---
 
-##  **PRÓXIMOS PASOS NATURALES**
+##  PRÓXIMOS PASOS NATURALES
 
-### **Corto Plazo (Fase 1.5):**
+### Corto Plazo (Fase 1.5):
 1. **Completar módulo de Correlaciones**
 2. **Implementar pruebas estadísticas** de uniformidad
 3. **Añadir números "calientes/fríos"**
 
-### **Mediano Plazo (Fase 2):**
+### Mediano Plazo (Fase 2):
 1. **Módulo de Simulación** de sorteos
 2. **Análisis de números atrasados**
 3. **Sistema de alertas** automáticas
 
-### **Largo Plazo (Fase 3):**
+### Largo Plazo (Fase 3):
 1. **Modelos predictivos** básicos
 2. **Análisis de clusters** de números
 3. **Dashboard ejecutivo** con KPIs
 
 ---
 
-##  **VALOR AGREGADO ACTUAL**
+##  VALOR AGREGADO ACTUAL
 
-### **Para Investigadores:**
+### Para Investigadores:
 - Herramienta completa de análisis exploratorio
 - Visualizaciones listas para publicaciones
 - Datos actualizados automáticamente
 
-### **Para Usuarios Generales:**
+### Para Usuarios Generales:
 - Interfaz intuitiva sin necesidad de código
 - Análisis profundos con un clic
 - Transparencia total en los métodos
 
-### **Para Desarrolladores:**
+### Para Desarrolladores:
 - Código bien estructurado y documentado
 - Fácil de extender y mantener
 - Ejemplo de mejores prácticas en Shiny
 
 ---
 
-##  **CONCLUSIÓN**
+##  CONCLUSIÓN
 
 **Has construido una aplicación de análisis de datos profesional** que:
 
