@@ -1,14 +1,16 @@
 # Proyecto Baloto Analyzer
 
+Esta aplicación busca analizar los sorteos, simular sorteos y predecir conjuntos de números de Baloto. 
+
 ##  Estado Actual: FASE 1 COMPLETADA
 
 ### Arquitectura Implementada
 
 #### Módulos Principales:
-1. BASE DE DATOS - Fuente única de verdad
-2. ANÁLISIS UNIVARIADO - Estadísticas individuales
-3. ANÁLISIS MULTIVARIADO - Relaciones entre variables
-4. VALIDACIÓN ESTADÍSTICA - Pruebas de hipótesis
+1. Base de datos - Fuente única de verdad
+2. Análisis univariado - Estadísticas individuales
+3. Análisis multivariado - Relaciones entre variables
+4. Validación estadística - Pruebas de hipótesis
 
 #### Tecnología:
 - **Frontend**: Shiny Dashboard + Plotly + DT
@@ -155,7 +157,7 @@
 
 ##  CONCLUSIÓN
 
-**Has construido una aplicación de análisis de datos profesional** que:
+**Se busca construir una aplicación de análisis de datos profesional** que:
 
 -  **Automatiza** la recolección y limpieza de datos
 -  **Visualiza** patrones complejos de manera intuitiva  
