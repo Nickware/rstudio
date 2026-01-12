@@ -67,11 +67,7 @@ shinyServer(function(input, output, session) {
   observeEvent(input$Fecha_i2, {
     df <- datos_usuario()
     selected <- df %>% filter(Fecha == input$Fecha_i2)
-    if (nrow(selected) > 0) {
-      # updateTextInput(session, "calorias", value = selected$calorias)
-      # updateTextInput(session, "Frecuencia.cardiaca.media", value = selected$Frecuencia.cardiaca.media)
-      # updateTextInput(session, "TE.aeróbico", value = selected$TE.aeróbico)
-    }
+    if (nrow(selected) > 0) {}
   })
   
   #–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––#
