@@ -2,7 +2,7 @@ library(shiny)
 library(tidyverse)
 library(lubridate)
 
-# ---- Funciones de Análisis (Modularizado) ----
+# ---- Funciones de Análisis ----
 source("global.R")
 
 function(input, output, session) {
