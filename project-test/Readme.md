@@ -1,3 +1,51 @@
+# Baloto
+
+Baloto es la lotería más popular de Colombia, un juego de azar tipo loto administrado por Coljuegos que ofrece premios multimillonarios acumulados. [baloto](https://baloto.com/que-es-baloto)
+
+## Cómo se juega
+
+- **Formato actual (desde 2025):** Eliges **5 números principales del 1 al 43** + **1 Superbalota del 1 al 16**. [es.scribd](https://es.scribd.com/document/851924091/Baloto)
+- **Costo:** $6.000 COP por apuesta simple (incluye Baloto + Revancha automática). [mundovideo.com](https://www.mundovideo.com.co/coljuegoseice/coljuegos-aprueba-cambios-al-reglamento-de-baloto-nuevos-precios-sorteos-y-premios/)
+- **Sorteos:** **Lunes, miércoles y sábados** a las 10:00 p.m., transmitidos en vivo. [deportivas.com](https://deportivas.com.co/plan-de-premios-del-baloto-cuanto-paga-por-numeros-acertados)
+- **Opciones adicionales:** Revancha (mismo sorteo, premio separado de $2.000 millones iniciales) y Multiplicador opcional. [loteriasdehoy](https://loteriasdehoy.co/baloto)
+
+## Plan de premios (aproximado, variable)
+
+| Aciertos          | Premio típico (millones COP) |
+|-------------------|------------------------------|
+| 5 + Superbalota   | Acumulado ($4.300M inicial, crece)  [baloto](https://baloto.com/que-es-baloto) |
+| 5 + 0             | $30-50M  [resultadobaloto](https://www.resultadobaloto.com/resultados.php)     |
+| 4 + Superbalota   | $1-2M  [loteriasdehoy](https://loteriasdehoy.co/baloto)               |
+| 4 + 0             | $100-200K                    |
+| 3 + Superbalota   | $50-60K                      |
+| 3 + 0             | $10K                         |
+| 2 + Superbalota   | $12K                         |
+| 1/0 + Superbalota | $6K                          |
+
+- **Probabilidad premio mayor:** 1 en 15.401.568 combinaciones. [occidente](https://occidente.co/colombia/que-probabilidad-hay-de-ganarse-el-baloto/)
+- **Pago:** En puntos autorizados (hasta $10M) o bancos/Coljuegos (premios mayores); requieren identificación. [baloto](https://baloto.com/pago-de-premios)
+
+## Resultados recientes (febrero 2026)
+
+El jackpot principal sigue **acumulándose** (sin ganadores recientes del 5+1). [resultadobaloto](https://www.resultadobaloto.com/resultados.php)
+
+| Fecha       | Números principales | Superbalota | Notas (Revancha) |
+|-------------|---------------------|-------------|------------------|
+| 16/02/2026 | 09-18-21-22-42     | 14         | Acumulado $22.400M  [mundonets](https://www.mundonets.com/baloto/) |
+| 14/02/2026 | 15-21-29-34-35     | 06         | 1 ganador 5+0 ($46M)  [resultadobaloto](https://www.resultadobaloto.com/resultados.php) |
+| 11/02/2026 | 09-14-30-36-42     | 06         | Acumulado        |
+| 09/02/2026 | 11-17-20-36-38     | 14         | 1 ganador 5+0 ($17M) |
+
+Datos completos en baloto.com/resultados. [baloto](https://baloto.com/resultados)
+
+## Dónde jugar
+
+- **Puntos físicos:** Más de 10.000 puntos autorizados en Colombia.  
+- **En línea:** Plataformas autorizadas como baloto.com o apps oficiales. [baloto](https://baloto.com)
+- **Edad mínima:** 18 años. [coljuegos.gov](https://www.coljuegos.gov.co/publicaciones/300629/baloto/)
+
+Baloto genera fondos para programas sociales; recuerda que es entretenimiento, no inversión (valor esperado negativo). [focusgn](https://focusgn.com/latinoamerica/como-se-juega-el-baloto)
+
 # Proyecto Baloto Analyzer
 
 Esta aplicación busca analizar los sorteos, simular sorteos y predecir conjuntos de números de Baloto. 
