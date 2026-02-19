@@ -92,3 +92,36 @@ En R (usado desde RStudio) hay miles de paquetes, pero algunos se han vuelto cas
 [8](https://deminions.com/lista-de-paquetes-de-r-domine-todos-los-paquetes-b%C3%A1sicos-de-la-programaci%C3%B3n-en-r/)
 [9](https://www.icesi.edu.co/editorial/empezando-usar-web/paquetes.html)
 [10](https://www.reddit.com/r/rstats/comments/1ak05u7/what_are_some_cool_r_packages_to_use_in_2024/?tl=es-es)
+
+# Tecnologías del ecosistema de datos con Rstudio
+
+RStudio se potencia muchísimo cuando lo combinas con otras **tecnologías del ecosistema de datos**, tanto dentro de R como en otros lenguajes.
+
+## Tecnologías dentro del ecosistema R
+
+- **Shiny:** Permite crear aplicaciones web interactivas directamente desde R, usando el código y resultados que ya trabajas en RStudio, ideal para tableros y prototipos rápidos. [quarto](https://quarto.org/docs/dashboards/interactivity/shiny-r.html)
+- **R Markdown:** Sirve para generar informes reproducibles que mezclan texto, código y resultados (gráficos, tablas) en formatos como HTML, PDF o Word. [cdr-book.github](https://cdr-book.github.io/cap-120007-informes.html)
+- **Quarto:** Es el sucesor moderno de R Markdown; permite publicar documentos, libros, dashboards y sitios web usando R, Python, Julia u otros lenguajes desde RStudio. [docs.posit](https://docs.posit.co/ide/user/ide/guide/documents/quarto-project.html)
+- **Plumber:** Convierte funciones de R en APIs HTTP, de modo que tus modelos o análisis se puedan consumir desde aplicaciones externas (móviles, web, otros servicios). [rstudio.r-universe](https://rstudio.r-universe.dev/packages)
+- **Paquetes de dashboards (shinydashboard, bslib, etc.):** Extienden Shiny para construir paneles más completos, con temas y componentes listos para uso empresarial. [rstudio.r-universe](https://rstudio.r-universe.dev/packages)
+
+## Integración con otros lenguajes y herramientas
+
+- **Python (reticulate y RStudio Workbench):** Puedes combinar R y Python en el mismo proyecto, e incluso usar Jupyter, VS Code y otros entornos bajo la misma infraestructura de RStudio/Posit Workbench. [youtube](https://www.youtube.com/watch?v=o36425S1-VU)
+- **Jupyter Notebooks / JupyterLab:** RStudio/Posit permite lanzar y gestionar entornos Jupyter junto con RStudio, facilitando equipos “bilingües” R–Python que comparten infraestructura y despliegue. [github](https://github.com/binder-examples/r_with_python)
+- **VS Code:** Se puede usar como editor dentro de la plataforma RStudio Workbench para quienes prefieren ese entorno pero necesitan desplegar resultados vía RStudio Connect. [youtube](https://www.youtube.com/watch?v=o36425S1-VU)
+
+## Publicación y despliegue
+
+- **Posit Connect (antes RStudio Connect):** Plataforma para publicar Shiny, R Markdown/Quarto, APIs Plumber, notebooks de Python y otros contenidos, y compartirlos con usuarios finales de negocio. [youtube](https://www.youtube.com/watch?v=o36425S1-VU)
+- **rsconnect:** Paquete R que automatiza el despliegue de documentos, apps y APIs desde RStudio hacia Posit Connect, shinyapps.io o RPubs. [rstudio](https://www.rstudio.com/wp-content/uploads/2019/01/Using-Python-with-RStudio-Connect-1.7.0.pdf)
+
+## Gestión de proyectos y colaboración
+
+- **Git / GitHub / GitLab:** RStudio se integra con sistemas de control de versiones para trabajar en equipo, versionar análisis y mantener trazabilidad del código.  
+- **RStudio Package Manager / Posit Package Manager:** Permite gestionar de forma centralizada paquetes de R y Python para equipos, garantizando reproducibilidad y control de versiones. [rstudio](https://www.rstudio.com/wp-content/uploads/2019/01/Using-Python-with-RStudio-Connect-1.7.0.pdf)
+
+En conjunto, estas tecnologías convierten a RStudio en el núcleo de un ecosistema completo: desarrollo (IDE), análisis (R/Python), comunicación (R Markdown/Quarto, Shiny), APIs (Plumber) y despliegue empresarial (Posit Connect).
+
+
+
