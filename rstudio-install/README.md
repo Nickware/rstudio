@@ -4,7 +4,7 @@ Este script automatiza la instalación de RStudio Desktop en sistemas basados en
 
 ## Requisitos previos
 
-Antes de ejecutar el script, asegúrase de tener permisos de administrador (sudo) y una conexión a internet habilitada.
+Antes de ejecutar el script, asegúrese de tener permisos de administrador (sudo) y una conexión a internet habilitada.
 
 ## Pasos para la instalación
 
@@ -22,8 +22,8 @@ Antes de ejecutar el script, asegúrase de tener permisos de administrador (sudo
 2. **Proporcionar la URL del paquete `.deb`**:
      > Recuerde que el archivo que debe descargar, corresponde a un archivo .deb, asociado a las distribuciones Debian o sus distribuciones derivadas
    - Durante la ejecución, el script pedirá que visite la página oficial de RStudio Desktop: [https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/).
-   - Debera busca el paquete `.deb` correspondiente a la arquitectura de su equipo (por ejemplo, `amd64`).
-   - Copia la URL del paquete y pégala en la terminal cuando el script lo solicite.
+   - Deberá buscar el paquete `.deb` correspondiente a la arquitectura de su equipo (por ejemplo, `amd64`).
+   - Copiar la URL del paquete y pegarla en la terminal cuando el script lo solicite.
 
 3. **Instalación automática**:
    - El script descargará e instalará RStudio Desktop automáticamente.
