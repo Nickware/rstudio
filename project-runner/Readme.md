@@ -4,7 +4,7 @@ Aplicación Shiny diseñada para visualizar, analizar y comparar datos de activi
 
 ## Descripción
 
-Esta aplicación permite cargar archivos CSV con datos de actividades de running y visualizar información clave en un dashboard interactivo. Incluye análisis general, detalles de cada carrera, información cardiovascular y una herramienta para comparar dos actividades.
+Esta aplicación permite cargar archivos CSV con datos de actividades de running y visualizar información clave en un dashboard interactivo. Incluye análisis general, detalles de cada carrera, información de las frecuencias y una herramienta para comparar dos actividades.
 
 ## Características principales
 
@@ -46,11 +46,11 @@ shiny::runApp()
 1. **Carga archivo CSV:**
 It a la pestaña "Data File" y seleccionar archivo CSV.
 2. **Explora la información general:**
-Consultar el histograma y los resúmenes en la pestaña "Informacion General".
+Consultar el histograma y los resúmenes en la pestaña "Información General".
 3. **Consulta detalles de una actividad:**
 Seleccionar una fecha en la pestaña "Run Info" para ver detalles específicos.
 4. **Visualiza información cardiovascular:**
-Hacer click en la pestaña "Cardio Info" para ver gráficos relacionados.
+Hacer clic en la pestaña "Cardio Info" para ver gráficos relacionados.
 5. **Compara actividades:**
 En la pestaña "Comparar actividades", selecciona dos fechas para comparar sus datos.
 
@@ -59,7 +59,7 @@ En la pestaña "Comparar actividades", selecciona dos fechas para comparar sus d
 El dashboard está estructurado en las siguientes pestañas:
 
 - **Data File:** Carga y visualización de archivos CSV.
-- **Informacion General:** Resumen estadístico y gráfico de actividades.
+- **Información General:** Resumen estadístico y gráfico de actividades.
 - **Run Info:** Detalles de cada carrera.
 - **Cardio Info:** Información cardiovascular.
 - **Comparar actividades:** Comparación de dos actividades.
@@ -67,7 +67,7 @@ El dashboard está estructurado en las siguientes pestañas:
 
 ## Ejemplo de datos
 
-Asegúrarse que el archivo CSV contenga al menos las siguientes columnas (o similares):
+Asegurarse de que el archivo CSV contenga al menos las siguientes columnas (o similares):
 
 - `Fecha`
 - `Distancia`
