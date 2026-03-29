@@ -121,6 +121,48 @@ RStudio se potencia muchísimo cuando lo combinas con otras **tecnologías del e
 - **Git / GitHub / GitLab:** RStudio se integra con sistemas de control de versiones para trabajar en equipo, versionar análisis y mantener trazabilidad del código.  
 - **RStudio Package Manager / Posit Package Manager:** Permite gestionar de forma centralizada paquetes de R y Python para equipos, garantizando reproducibilidad y control de versiones. [rstudio](https://www.rstudio.com/wp-content/uploads/2019/01/Using-Python-with-RStudio-Connect-1.7.0.pdf)
 
+# JavaScript con RStudio
+
+JavaScript se integra perfectamente con RStudio a través de **R Markdown, Shiny y Quarto**, permitiendo crear aplicaciones web interactivas, dashboards y documentos dinámicos sin salir del entorno R.
+
+## Integración directa en RStudio
+
+- **R Markdown/HTML + JavaScript:** Puedes incrustar código JavaScript directamente en documentos R Markdown que se renderizan como HTML. RStudio ofrece resaltado de sintaxis y previsualización en vivo para JS dentro de bloques `<script>`.
+- **Shiny + htmlwidgets:** Shiny apps de RStudio permiten usar widgets JavaScript (como `leaflet` para mapas, `dygraphs` para gráficos interactivos, `DT` para tablas) que se renderizan en el navegador pero se controlan desde código R.
+- **Quarto:** Similar a R Markdown pero más moderno, soporta JavaScript nativo en documentos, presentaciones y sitios web publicados desde RStudio.
+
+## Paquetes clave para JavaScript en RStudio
+
+- **htmlwidgets:** Framework que convierte librerías JavaScript populares (D3.js, Plotly.js, Three.js) en widgets reutilizables desde R. Instalas con `install.packages("htmlwidgets")`.
+- **shinyjs:** Extiende Shiny con funciones JavaScript como `show()`, `hide()`, `click()`, `delay()` para controlar la UI desde R.
+- **DT (DataTables):** Tablas interactivas con búsqueda, paginación y ordenamiento usando la librería JavaScript DataTables.
+- **leaflet:** Mapas interactivos basados en Leaflet.js, con zoom, capas y marcadores controlados desde R.
+- **Plotly:** Gráficos interactivos 2D/3D con zoom, hover y exportación, usando Plotly.js.
+- **reactlog:** Depurador visual para apps Shiny que usa JavaScript para mostrar el "reactivity graph".
+
+## Tecnologías JavaScript complementarias
+
+- **D3.js:** Para visualizaciones de datos personalizadas complejas (árboles, redes, flujos). Se usa vía `D3networkD3` o `networkD3`.
+- **Three.js:** Gráficos 3D WebGL. Disponible vía `rthreejs`.
+- **Chart.js:** Gráficos simples y responsivos con `highcharter` o `chartjsr`.
+- **Bootstrap:** Estilos CSS/JS responsivos para Shiny apps con `shinythemes` o `bslib`.
+
+## Ventajas de esta integración
+
+- **Sin salir de RStudio:** Todo el desarrollo (R + JS + CSS + HTML) en un solo IDE.
+- **Reactivity bidireccional:** Los datos cambian en R → UI se actualiza automáticamente vía JS.
+- **Publicación fácil:** Un clic publica a shinyapps.io, RPubs o Posit Connect.
+- **Portabilidad:** Funciona offline y se despliega como app web estándar.
+
+## Casos de uso reales
+
+- **Dashboards ejecutivos:** Shiny + Plotly + Bootstrap para KPIs interactivos.
+- **Mapas epidemiológicos:** leaflet con datos de R actualizados en tiempo real.
+- **Tableros de datos masivos:** DT con filtros JavaScript sobre millones de filas.
+- **Simuladores financieros:** Shiny + dygraphs para series temporales interactivas.
+
+> RStudio + JavaScript (vía Shiny y htmlwidgets) permite crear aplicaciones web modernas y profesionales directamente desde los análisis de datos en R, sin necesidad de aprender desarrollo web tradicional desde cero.
+
 En conjunto, estas tecnologías convierten a RStudio en el núcleo de un ecosistema completo: desarrollo (IDE), análisis (R/Python), comunicación (R Markdown/Quarto, Shiny), APIs (Plumber) y despliegue empresarial (Posit Connect).
 
 
