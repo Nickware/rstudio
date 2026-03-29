@@ -66,8 +66,6 @@ Esta aplicación busca analizar los sorteos, simular sorteos y predecir conjunto
 - **Datos**: Web scraping en tiempo real
 - **Visualización**: Gráficos interactivos
 
----
-
 ##  FUNCIONALIDADES IMPLEMENTADAS
 
 ### 1.  BASE DE DATOS
@@ -105,8 +103,6 @@ Esta aplicación busca analizar los sorteos, simular sorteos y predecir conjunto
 -  *En desarrollo* - Pruebas de uniformidad
 -  *En desarrollo* - Test de aleatoriedad
 
----
-
 ##  EXPERIENCIA DE USUARIO
 
 ### Interfaz:
@@ -121,8 +117,6 @@ Esta aplicación busca analizar los sorteos, simular sorteos y predecir conjunto
 -  **Zoom y pan** en series temporales
 -  **Descarga de datos** en formatos estándar
 
----
-
 ##  CAPACIDADES ANALÍTICAS ACTUALES
 
 ### Detección de Patrones:
@@ -131,7 +125,6 @@ Esta aplicación busca analizar los sorteos, simular sorteos y predecir conjunto
 - "El número 7 aparece 12 veces en Balota 1 (frecuencia atípica)"
 - "SuperBalota muestra distribución uniforme (p-value > 0.05)"
 - "Tendencia alcista en Balota 3 últimos 20 sorteos"
-```
 
 ### Validación de Supuestos:
 - Distribución esperada vs observada
@@ -142,8 +135,6 @@ Esta aplicación busca analizar los sorteos, simular sorteos y predecir conjunto
 - Heatmaps con escala de colores
 - Boxplots con medidas de dispersión
 - Series temporales con rangeslider
-
----
 
 ##  LOGROS TÉCNICOS
 
@@ -163,8 +154,6 @@ Esta aplicación busca analizar los sorteos, simular sorteos y predecir conjunto
 -  **Interactividad** sin lag
 -  **Manejo eficiente** de datos en memoria
 
----
-
 ##  PRÓXIMOS PASOS NATURALES
 
 ### Corto Plazo (Fase 1.5):
@@ -182,8 +171,6 @@ Esta aplicación busca analizar los sorteos, simular sorteos y predecir conjunto
 2. **Análisis de clusters** de números
 3. **Dashboard ejecutivo** con KPIs
 
----
-
 ##  VALOR AGREGADO ACTUAL
 
 ### Para Investigadores:
@@ -200,8 +187,6 @@ Esta aplicación busca analizar los sorteos, simular sorteos y predecir conjunto
 - Código bien estructurado y documentado
 - Fácil de extender y mantener
 - Ejemplo de mejores prácticas en Shiny
-
----
 
 ##  CONCLUSIÓN
 
