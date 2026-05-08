@@ -86,7 +86,7 @@ shinyUI(dashboardPage(
                   textInput("calorias", "Calories (Energy)", value = "", width = "100%")),
               box(width = 2, title = "Pulsaciones", background = "yellow", solidHeader = TRUE,
                   textInput("Frecuencia.cardiaca.media", "Heart rate (bpm)", value = "", width = "100%")),
-              box(width = 2, title = "TE anaeróbico", background = "fuchsia", solidHeader = TRUE,
+              box(width = 2, title = "TE aeróbico", background = "fuchsia", solidHeader = TRUE,
                   textInput("TE.aeróbico", "Aerobic Training Effect", value = "", width = "100%"))
             )
     ),
@@ -103,7 +103,7 @@ shinyUI(dashboardPage(
             box(plotOutput("temperature_plot", height = 400, width = "100%")),
             box(plotOutput("height_plot", height = 400, width = "100%"))
     ), 
-
+    
     # 5. Comparar actividades
     tabItem(tabName = "comparar_actividades",
             fluidRow(
@@ -126,9 +126,8 @@ shinyUI(dashboardPage(
             ),
             fluidRow(
               box(width = 12, title="Comparación Gráfica", status = "info",
-              plotlyOutput("comparison_plot", height = "400px"))
+                  plotlyOutput("comparison_plot", height = "400px"))
             )
-            )
+    )
   ))
 ))
-
