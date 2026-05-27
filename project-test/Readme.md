@@ -50,7 +50,7 @@ Baloto genera fondos para programas sociales; recuerda que es entretenimiento, n
 
 Esta aplicación busca analizar los sorteos, simular sorteos y predecir conjuntos de números de Baloto. 
 
-##  Estado Actual: FASE 1 COMPLETADA
+##  Estado Actual: Fase 1 Completada
 
 ### Arquitectura Implementada
 
@@ -66,15 +66,15 @@ Esta aplicación busca analizar los sorteos, simular sorteos y predecir conjunto
 - **Datos**: Web scraping en tiempo real
 - **Visualización**: Gráficos interactivos
 
-##  FUNCIONALIDADES IMPLEMENTADAS
+##  Funcionalidades Implementadas
 
-### 1.  BASE DE DATOS
+### 1.  Base de datos
 -  **Scraping automático** desde resultadobaloto.com
 -  **Limpieza y validación** de datos
 -  **Tabla interactiva** con todos los sorteos históricos
 -  **Actualización manual** con un botón
 
-### 2.  ANÁLISIS UNIVARIADO
+### 2.  Análisis Univariado
 
 #### Distribuciones:
 -  **Histogramas interactivos** por balota
@@ -87,7 +87,7 @@ Esta aplicación busca analizar los sorteos, simular sorteos y predecir conjunto
 -  **Medias móviles** configurables
 -  **Visualización comparativa** entre balotas
 
-### 3.  ANÁLISIS MULTIVARIADO
+### 3.  Análisis Multivariado
 
 #### Por Posición:
 -  **Heatmap interactivo** frecuencias vs posición
@@ -99,11 +99,11 @@ Esta aplicación busca analizar los sorteos, simular sorteos y predecir conjunto
 -  *En desarrollo* - Matriz de correlación
 -  *En desarrollo* - Autocorrelación
 
-### 4.  VALIDACIÓN ESTADÍSTICA
+### 4.  Validación Estadística
 -  *En desarrollo* - Pruebas de uniformidad
 -  *En desarrollo* - Test de aleatoriedad
 
-##  EXPERIENCIA DE USUARIO
+##  Experiencia de usuario
 
 ### Interfaz:
 -  **Menú jerárquico** organizado por módulos
@@ -117,7 +117,7 @@ Esta aplicación busca analizar los sorteos, simular sorteos y predecir conjunto
 -  **Zoom y pan** en series temporales
 -  **Descarga de datos** en formatos estándar
 
-##  CAPACIDADES ANALÍTICAS ACTUALES
+##  Capacidades Analíticas Actuales
 
 ### Detección de Patrones:
 ```r
@@ -136,7 +136,7 @@ Esta aplicación busca analizar los sorteos, simular sorteos y predecir conjunto
 - Boxplots con medidas de dispersión
 - Series temporales con rangeslider
 
-##  LOGROS TÉCNICOS
+##  Logros técnicos
 
 ### Código:
 -  **Arquitectura modular** y escalable
@@ -154,7 +154,7 @@ Esta aplicación busca analizar los sorteos, simular sorteos y predecir conjunto
 -  **Interactividad** sin lag
 -  **Manejo eficiente** de datos en memoria
 
-##  PRÓXIMOS PASOS NATURALES
+##  Próximos Pasos Naturales
 
 ### Corto Plazo (Fase 1.5):
 1. **Completar módulo de Correlaciones**
@@ -171,7 +171,7 @@ Esta aplicación busca analizar los sorteos, simular sorteos y predecir conjunto
 2. **Análisis de clusters** de números
 3. **Dashboard ejecutivo** con KPIs
 
-##  VALOR AGREGADO ACTUAL
+##  Valor agregado actual
 
 ### Para Investigadores:
 - Herramienta completa de análisis exploratorio
@@ -188,7 +188,7 @@ Esta aplicación busca analizar los sorteos, simular sorteos y predecir conjunto
 - Fácil de extender y mantener
 - Ejemplo de mejores prácticas en Shiny
 
-##  CONCLUSIÓN
+##  Conclusión
 
 **Se busca construir una aplicación de análisis de datos profesional** que:
 
