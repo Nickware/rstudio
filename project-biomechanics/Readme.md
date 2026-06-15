@@ -1,5 +1,5 @@
 
-# README - Running Biomechanics Analysis Platform
+# Running Biomechanics Analysis Platform
 
 ## Descripción del Proyecto
 
@@ -64,7 +64,7 @@ sudo apt install -f
 
 ## Instalación en Ubuntu/Debian (Instalación Directa)
 
-Si no usas Deepin o prefieres instalación directa:
+Si no usa Deepin o prefiere instalación directa:
 
 ### Paso 1: Agregar repositorio CRAN (para versión actualizada)
 
@@ -98,7 +98,7 @@ sudo apt install -f
 
 ## Dependencias del Sistema (Bibliotecas necesarias)
 
-**IMPORTANTE:** Ejecuta este comando **completo** para instalar todas las bibliotecas que R necesita para compilar paquetes:
+**IMPORTANTE:** Ejecutar este comando **completo** para instalar todas las bibliotecas que R necesita para compilar paquetes:
 
 ```bash
 sudo apt update
@@ -360,25 +360,25 @@ out <- ode(y = state, times = times, func = oscillator, parms = parms)
 plot(out[, "time"], out[, "x"], type = "l", 
      main = "Oscilador amortiguado - Funciona!")
 
-cat("\n✅ Entorno configurado correctamente\n")
+cat("\n Entorno configurado correctamente\n")
 ```
 
 ---
 
 ## Soporte
 
-Si encuentras problemas durante la instalación:
+Si encuentra problemas durante la instalación:
 
-1. Verifica la versión de R: `R --version`
-2. Verifica dependencias del sistema: `apt list --installed | grep -E "lib(uv|xml|curl|fontconfig|harfbuzz|freetype)"`
-3. Revisa los logs de R para errores específicos
+1. Verificar la versión de R: `R --version`
+2. Verificar dependencias del sistema: `apt list --installed | grep -E "lib(uv|xml|curl|fontconfig|harfbuzz|freetype)"`
+3. Revisar los logs de R para errores específicos
 
 ---
 
 ## Licencia
 
-Este proyecto es de uso académico y científico para el análisis de biomecánica del running.
+Este proyecto es de uso académico y científico para el análisis de la biomecánica del running.
 
 ---
 
-**Última actualización:** Junio 2026
+**Última actualización:** junio 2026
