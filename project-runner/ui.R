@@ -1,133 +1,215 @@
+# ══════════════════════════════════════════════════════════════════════════════
+# ui.R — Running Biomechanics Dashboard
+# 6 tabs: Datos · Sesión · Evolución · Comparar · Fisiología · Biomecánica
+# ══════════════════════════════════════════════════════════════════════════════
+
 library(shiny)
 library(shinydashboard)
 library(plotly)
 
 shinyUI(dashboardPage(
-  dashboardHeader(title = "Running Dashboard"),
-  
-  dashboardSidebar(sidebarMenu(
-    menuItem("Data File", tabName = "data_file", icon = icon("th")),
-    menuItem("Informacion General", tabName = "informacion_general", icon = icon("dashboard")),
-    menuItem("Run Info", tabName = "run_info", icon = icon("dashboard")),
-    menuItem("Cardio Info", tabName = "cardio_info", icon = icon("heart")),
-    menuItem("Comparar actividades", tabName = "comparar_actividades", icon = icon("balance-scale"))
-  )),
-  
-  dashboardBody(tabItems(
-    
-    # 1. Subida de archivo
-    tabItem(tabName = "data_file",
-            fluidPage(
-              titlePanel("Uploading Files"),
-              sidebarLayout(
-                sidebarPanel(
-                  fileInput("file1", "Choose CSV File", multiple = FALSE,
-                            accept = c("text/csv", "text/comma-separated-values,text/plain", ".csv")),
-                  tags$hr(),
-                  checkboxInput("header", "Header", TRUE),
-                  radioButtons("sep", "Separator", choices = c(Comma = ",", Semicolon = ";", Tab = "\t"), selected = ","),
-                  radioButtons("quote", "Quote", choices = c(None = "", "Double Quote" = '"', "Single Quote" = "'"), selected = '"'),
-                  tags$hr(),
-                  radioButtons("disp", "Display", choices = c(Head = "head", All = "all"), selected = "head")
-                ),
-                mainPanel(tableOutput("contents"))
-              )
-            )
-    ),
-    
-    # 2. Información General
-    tabItem(tabName = "informacion_general",
-            box(
-              width = 12,  # Usar ancho completo (12 es el máximo en fluidRow)
-              title = "Histograma de Actividades",
-              status = "primary",
-              solidHeader = TRUE,
-              plotlyOutput("actividad_histograma", height = "400px")  # Solo especificar altura
-            ),
-            fluidRow(
-              valueBoxOutput("total_activities_box"),
-              valueBoxOutput("total_distance_box"),
-              valueBoxOutput("total_time_box"),
-              valueBoxOutput("total_average_pace_box"),
-              valueBoxOutput("total_average_running_box"),
-              valueBoxOutput("total_average_stride_box")
-            )
-    ),
-    
-    # 3. Información de carrera
-    tabItem(tabName = "run_info",
-            box(
-              width = 4,
-              title = "Fecha",
-              status = "warning",
-              solidHeader = TRUE,
-              selectInput("Fecha", "Date", choices = NULL)  # se actualiza en server.R
-            ),
-            fluidRow(
-              box(width = 2, title = "Distancia", background = "maroon", solidHeader = TRUE,
-                  numericInput("Distancia", "Distance (km)", value = 0, step = 0.01, min = 0, max = 100, width = "100%")),
-              box(width = 2, title = "Tiempo", background = "blue", solidHeader = TRUE,
-                  textInput("Tiempo", "Time (hh:mm:ss)", value = "", width = "100%")),
-              box(width = 2, title = "Ritmo Medio", background = "green", solidHeader = TRUE,
-                  textInput("Ritmo.medio", "Average pace (mm:ss)", value = "", width = "100%")),
-              box(width = 2, title = "Cadencia media de Carrera", background = "purple", solidHeader = TRUE,
-                  numericInput("Cadencia.de.carrera.media", "Average running cadence (pmm)", value = 0, step = 1, min = 0, max = 10000, width = "100%")),
-              box(width = 2, title = "Longitud media de Zancada", background = "navy", solidHeader = TRUE,
-                  numericInput("Longitud.media.de.zancada", "Average stride length (m)", value = 0, step = 0.01, min = 0, max = 200, width = "100%"))
-            ),
-            box(
-              width = 4,
-              title = "Running Performance",
-              status = "warning",
-              solidHeader = TRUE,
-            ),
-            fluidRow(
-              box(width = 2, title = "Calorias", background = "light-blue", solidHeader = TRUE,
-                  textInput("calorias", "Calories (Energy)", value = "", width = "100%")),
-              box(width = 2, title = "Pulsaciones", background = "yellow", solidHeader = TRUE,
-                  textInput("Frecuencia.cardiaca.media", "Heart rate (bpm)", value = "", width = "100%")),
-              box(width = 2, title = "TE aeróbico", background = "fuchsia", solidHeader = TRUE,
-                  textInput("TE.aeróbico", "Aerobic Training Effect", value = "", width = "100%"))
-            )
-    ),
-    
-    # 4. Información cardiovascular
-    tabItem(tabName = "cardio_info",
-            box(
-              width = 5,
-              title = "Fecha",
-              status = "danger",
-              solidHeader = TRUE,
-              selectInput("Fecha_i2", "Date", choices = NULL)  # se actualiza en server.R
-            ),
-            box(plotOutput("temperature_plot", height = 400, width = "100%")),
-            box(plotOutput("height_plot", height = 400, width = "100%"))
-    ), 
-    
-    # 5. Comparar actividades
-    tabItem(tabName = "comparar_actividades",
-            fluidRow(
-              box(
-                width = 6,
-                title = "Actividad_1",
-                status = "primary",
-                solidHeader = TRUE,
-                selectInput("comp_fecha_1", "Fecha Actividad 1", choices = NULL),  # se actualiza en server.R
-                tableOutput("tabla_actividad_1")  # se actualiza en server.R
-              ),
-              box(
-                width = 6,
-                title = "Actividad_2",
-                status = "success",
-                solidHeader = TRUE,
-                selectInput("comp_fecha_2", "Fecha Actividad 2", choices = NULL),  # se actualiza en server.R
-                tableOutput("tabla_actividad_2")  # se actualiza en server.R
-              )
-            ),
-            fluidRow(
-              box(width = 12, title="Comparación Gráfica", status = "info",
-                  plotlyOutput("comparison_plot", height = "400px"))
-            )
+  skin = "blue",
+
+  # ── Header ────────────────────────────────────────────────────────────────
+  dashboardHeader(
+    title = "Running Dashboard",
+    tags$li(class = "dropdown",
+            tags$li(class = "dropdown",
+                    textOutput("n_sesiones"),
+                    style = "padding: 15px 20px; color: white; font-weight: bold;"))
+  ),
+
+  # ── Sidebar ───────────────────────────────────────────────────────────────
+  dashboardSidebar(
+    sidebarMenu(
+      menuItem("Datos",        tabName = "tab_datos",      icon = icon("upload")),
+      menuItem("Sesión",       tabName = "tab_sesion",     icon = icon("running")),
+      menuItem("Evolución",    tabName = "tab_evolucion",  icon = icon("chart-line")),
+      menuItem("Comparar",     tabName = "tab_comparar",   icon = icon("balance-scale")),
+      menuItem("Fisiología",   tabName = "tab_fisiologia", icon = icon("heartbeat")),
+      menuItem("Biomecánica",  tabName = "tab_biomecanica",icon = icon("shoe-prints"))
     )
-  ))
+  ),
+
+  # ── Body ──────────────────────────────────────────────────────────────────
+  dashboardBody(
+
+    # CSS mínimo para separación visual
+    tags$head(tags$style(HTML("
+      .content-wrapper { background-color: #f4f6f9; }
+      .box { border-radius: 4px; }
+      .value-box .inner { padding: 10px; }
+    "))),
+
+    tabItems(
+
+      # ══════════════════════════════════════════════════════════════════════
+      # TAB 1 — DATOS: carga de archivos .fit
+      # ══════════════════════════════════════════════════════════════════════
+      tabItem(tabName = "tab_datos",
+        fluidRow(
+          box(
+            width = 12, title = "Cargar sesiones de entrenamiento (.fit)",
+            status = "primary", solidHeader = TRUE,
+            fileInput(
+              "fit_files",
+              label    = "Selecciona uno o varios archivos .fit de Garmin",
+              multiple = TRUE,
+              accept   = ".fit",
+              buttonLabel = "Buscar archivos…",
+              placeholder = "Sin archivos seleccionados"
+            ),
+            tags$p(class = "text-muted",
+              "Exporta tus actividades desde Garmin Connect → ⚙️ → Exportar original,",
+              "o en bulk desde garmin.com/account/datamanagement"
+            )
+          )
+        ),
+        fluidRow(
+          box(
+            width = 12, title = "Sesiones cargadas",
+            status = "info", solidHeader = TRUE,
+            uiOutput("errores_carga"),
+            tableOutput("tabla_sesiones")
+          )
+        )
+      ),
+
+      # ══════════════════════════════════════════════════════════════════════
+      # TAB 2 — SESIÓN: ficha detallada + telemetría intrasesión
+      # ══════════════════════════════════════════════════════════════════════
+      tabItem(tabName = "tab_sesion",
+        fluidRow(
+          box(width = 4, title = "Seleccionar sesión", status = "warning", solidHeader = TRUE,
+              selectInput("sel_fecha_sesion", "Fecha", choices = NULL))
+        ),
+        fluidRow(
+          valueBoxOutput("box_dist"),
+          valueBoxOutput("box_tiempo"),
+          valueBoxOutput("box_ritmo"),
+          valueBoxOutput("box_cad"),
+          valueBoxOutput("box_fc"),
+          valueBoxOutput("box_fc_max")
+        ),
+        fluidRow(
+          box(width = 12, title = "FC y Ritmo a lo largo de la sesión",
+              status = "primary", solidHeader = TRUE,
+              plotlyOutput("plot_sesion_fc_ritmo", height = "350px"))
+        ),
+        fluidRow(
+          box(width = 12, title = "Cadencia y Altitud",
+              status = "info", solidHeader = TRUE,
+              plotlyOutput("plot_sesion_cad_alt", height = "300px"))
+        ),
+        fluidRow(
+          box(width = 12, title = "Análisis por laps (km a km)",
+              status = "success", solidHeader = TRUE,
+              tableOutput("tabla_laps"))
+        )
+      ),
+
+      # ══════════════════════════════════════════════════════════════════════
+      # TAB 3 — EVOLUCIÓN: series longitudinales
+      # ══════════════════════════════════════════════════════════════════════
+      tabItem(tabName = "tab_evolucion",
+        fluidRow(
+          box(width = 6, title = "Distancia por sesión",
+              status = "primary", solidHeader = TRUE,
+              plotlyOutput("plot_evol_distancia", height = "280px")),
+          box(width = 6, title = "Ritmo medio por sesión",
+              status = "success", solidHeader = TRUE,
+              plotlyOutput("plot_evol_ritmo", height = "280px"))
+        ),
+        fluidRow(
+          box(width = 6, title = "Cadencia media por sesión",
+              status = "info", solidHeader = TRUE,
+              plotlyOutput("plot_evol_cadencia", height = "280px")),
+          box(width = 6, title = "FC media por sesión",
+              status = "danger", solidHeader = TRUE,
+              plotlyOutput("plot_evol_fc", height = "280px"))
+        ),
+        fluidRow(
+          box(width = 12, title = "Eficiencia aeróbica (ritmo/FC) — ↓ mejor",
+              status = "warning", solidHeader = TRUE,
+              plotlyOutput("plot_evol_eficiencia", height = "280px"))
+        )
+      ),
+
+      # ══════════════════════════════════════════════════════════════════════
+      # TAB 4 — COMPARAR: dos sesiones
+      # ══════════════════════════════════════════════════════════════════════
+      tabItem(tabName = "tab_comparar",
+        fluidRow(
+          box(width = 6, title = "Sesión 1", status = "primary", solidHeader = TRUE,
+              selectInput("comp_fecha_1", "Fecha", choices = NULL),
+              tableOutput("tabla_comp_1")),
+          box(width = 6, title = "Sesión 2", status = "success", solidHeader = TRUE,
+              selectInput("comp_fecha_2", "Fecha", choices = NULL),
+              tableOutput("tabla_comp_2"))
+        ),
+        fluidRow(
+          box(width = 12, title = "Comparación normalizada de métricas",
+              status = "info", solidHeader = TRUE,
+              plotlyOutput("plot_comparacion", height = "350px"))
+        ),
+        fluidRow(
+          box(width = 12, title = "FC vs distancia — superposición de sesiones",
+              status = "warning", solidHeader = TRUE,
+              plotlyOutput("plot_comp_telemetria", height = "300px"))
+        )
+      ),
+
+      # ══════════════════════════════════════════════════════════════════════
+      # TAB 5 — FISIOLOGÍA
+      # ══════════════════════════════════════════════════════════════════════
+      tabItem(tabName = "tab_fisiologia",
+        fluidRow(
+          box(width = 4, title = "Sesión", status = "danger", solidHeader = TRUE,
+              selectInput("sel_fecha_cardio", "Fecha", choices = NULL))
+        ),
+        fluidRow(
+          box(width = 6, title = "Distribución por zonas de FC",
+              status = "danger", solidHeader = TRUE,
+              plotlyOutput("plot_zonas_fc", height = "320px")),
+          box(width = 6, title = "Deriva cardiaca (fatiga intrasesión)",
+              status = "warning", solidHeader = TRUE,
+              plotlyOutput("plot_deriva_fc", height = "320px"))
+        ),
+        fluidRow(
+          box(width = 12, title = "Carga de entrenamiento semanal",
+              status = "primary", solidHeader = TRUE,
+              plotlyOutput("plot_carga_semanal", height = "300px"))
+        )
+      ),
+
+      # ══════════════════════════════════════════════════════════════════════
+      # TAB 6 — BIOMECÁNICA
+      # ══════════════════════════════════════════════════════════════════════
+      tabItem(tabName = "tab_biomecanica",
+        fluidRow(
+          box(width = 4, title = "Sesión", status = "info", solidHeader = TRUE,
+              selectInput("sel_fecha_bio", "Fecha", choices = NULL))
+        ),
+        fluidRow(
+          box(width = 12, title = "Cadencia vs Longitud de zancada",
+              status = "info", solidHeader = TRUE,
+              plotlyOutput("plot_bio_zancada", height = "320px"))
+        ),
+        fluidRow(
+          box(width = 6, title = "Cadencia vs Velocidad (por zona FC)",
+              status = "primary", solidHeader = TRUE,
+              plotlyOutput("plot_bio_scatter", height = "320px")),
+          box(width = 6, title = "Degradación de cadencia (1ª vs 2ª mitad)",
+              status = "warning", solidHeader = TRUE,
+              plotlyOutput("plot_bio_degradacion", height = "320px"))
+        ),
+        fluidRow(
+          box(width = 12, title = "Ritmo por lap — análisis de consistencia",
+              status = "success", solidHeader = TRUE,
+              plotlyOutput("plot_bio_laps", height = "280px"))
+        )
+      )
+
+    ) # / tabItems
+  )   # / dashboardBody
 ))
