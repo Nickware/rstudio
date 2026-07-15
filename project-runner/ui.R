@@ -51,18 +51,34 @@ shinyUI(dashboardPage(
           box(
             width = 12, title = "Cargar sesiones de entrenamiento (.fit)",
             status = "primary", solidHeader = TRUE,
-            fileInput(
-              "fit_files",
-              label    = "Selecciona uno o varios archivos .fit de Garmin",
-              multiple = TRUE,
-              accept   = ".fit",
-              buttonLabel = "Buscar archivos…",
-              placeholder = "Sin archivos seleccionados"
+            fluidRow(
+            column(6,
+              fileInput(
+                "fit_files",
+                label    = "Archivos .fit de Garmin (telemetria completa)",
+                multiple = TRUE,
+                accept   = ".fit",
+                buttonLabel = "Buscar .fit...",
+                placeholder = "Sin archivos seleccionados"
+              )
             ),
-            tags$p(class = "text-muted",
-              "Exporta tus actividades desde Garmin Connect → ⚙️ → Exportar original,",
-              "o en bulk desde garmin.com/account/datamanagement"
+            column(6,
+              fileInput(
+                "csv_files",
+                label    = "Archivos .csv de Garmin Connect (resumen por sesion)",
+                multiple = TRUE,
+                accept   = c(".csv","text/csv"),
+                buttonLabel = "Buscar .csv...",
+                placeholder = "Sin archivos seleccionados"
+              )
             )
+          ),
+          tags$div(class = "alert alert-info",
+            tags$strong("Tip: "),
+            "Los .fit contienen telemetria segundo a segundo (tabs Sesion, Biomecanica y Fisiologia). ",
+            "Los .csv son el resumen de Garmin Connect y alimentan las tabs de Evolucion y Comparacion. ",
+            "Puedes cargar ambos formatos al mismo tiempo."
+          )
           )
         ),
         fluidRow(
