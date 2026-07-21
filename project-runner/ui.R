@@ -47,46 +47,81 @@ shinyUI(dashboardPage(
       # TAB 1 — DATOS: carga de archivos .fit
       # ══════════════════════════════════════════════════════════════════════
       tabItem(tabName = "tab_datos",
+
+        # -- Carga de archivos ------------------------------------------------
         fluidRow(
-          box(
-            width = 12, title = "Cargar sesiones de entrenamiento (.fit)",
-            status = "primary", solidHeader = TRUE,
+          box(width = 12, title = "Cargar sesiones de entrenamiento",
+              status = "primary", solidHeader = TRUE,
             fluidRow(
-            column(6,
-              fileInput(
-                "fit_files",
-                label    = "Archivos .fit de Garmin (telemetria completa)",
-                multiple = TRUE,
-                accept   = ".fit",
-                buttonLabel = "Buscar .fit...",
-                placeholder = "Sin archivos seleccionados"
+              column(6,
+                fileInput("fit_files",
+                  label = "Archivos .fit de Garmin (telemetria completa)",
+                  multiple = TRUE, accept = ".fit",
+                  buttonLabel = "Buscar .fit...",
+                  placeholder = "Sin archivos seleccionados")
+              ),
+              column(6,
+                fileInput("csv_files",
+                  label = "Archivos .csv de Garmin Connect (resumen por sesion)",
+                  multiple = TRUE, accept = c(".csv","text/csv"),
+                  buttonLabel = "Buscar .csv...",
+                  placeholder = "Sin archivos seleccionados")
               )
             ),
-            column(6,
-              fileInput(
-                "csv_files",
-                label    = "Archivos .csv de Garmin Connect (resumen por sesion)",
-                multiple = TRUE,
-                accept   = c(".csv","text/csv"),
-                buttonLabel = "Buscar .csv...",
-                placeholder = "Sin archivos seleccionados"
-              )
+            tags$div(class="alert alert-info",
+              tags$strong("Tip: "),
+              ".fit = telemetria segundo a segundo (Sesion, Biomecanica, Fisiologia). ",
+              ".csv = resumen de Garmin Connect (Evolucion, Comparar). ",
+              "Puedes cargar ambos formatos simultaneamente."
             )
-          ),
-          tags$div(class = "alert alert-info",
-            tags$strong("Tip: "),
-            "Los .fit contienen telemetria segundo a segundo (tabs Sesion, Biomecanica y Fisiologia). ",
-            "Los .csv son el resumen de Garmin Connect y alimentan las tabs de Evolucion y Comparacion. ",
-            "Puedes cargar ambos formatos al mismo tiempo."
-          )
           )
         ),
+
+        # -- Informacion global -----------------------------------------------
         fluidRow(
-          box(
-            width = 12, title = "Sesiones cargadas",
-            status = "info", solidHeader = TRUE,
+          box(width = 12, title = "Informacion global de todas las sesiones",
+              status = "success", solidHeader = TRUE, collapsible = TRUE,
+            fluidRow(
+              valueBoxOutput("box_g_sesiones",  width = 3),
+              valueBoxOutput("box_g_distancia", width = 3),
+              valueBoxOutput("box_g_tiempo",    width = 3),
+              valueBoxOutput("box_g_calorias",  width = 3)
+            ),
+            fluidRow(
+              valueBoxOutput("box_g_ritmo",     width = 3),
+              valueBoxOutput("box_g_ritmo_opt",     width = 3),
+              valueBoxOutput("box_g_fc",        width = 3),
+              valueBoxOutput("box_g_ascenso",   width = 3)
+            ),
+            fluidRow(
+              valueBoxOutput("box_g_descenso",      width = 3),
+              valueBoxOutput("box_g_zancada",      width = 3),
+              valueBoxOutput("box_g_cadencia",  width = 3),
+              valueBoxOutput("box_g_cadencia_max",  width = 3)
+            ),
+            fluidRow(
+              valueBoxOutput("box_g_te",            width = 3)
+              #valueBoxOutput("box_g_relacion_vert", width = 3),
+              #valueBoxOutput("box_g_fc_max",        width = 3),
+            ),
+          )
+        ),
+
+        # -- Tabla de sesiones ------------------------------------------------
+        fluidRow(
+          box(width = 12, title = "Detalle de sesiones cargadas",
+              status = "info", solidHeader = TRUE, collapsible = TRUE,
             uiOutput("errores_carga"),
             tableOutput("tabla_sesiones")
+          )
+        ),
+
+        # -- Tabla expandida con todos los campos -----------------------------
+        fluidRow(
+          box(width = 12, title = "Todos los campos por sesion",
+              status = "warning", solidHeader = TRUE, collapsible = TRUE,
+              collapsed = TRUE,
+            tableOutput("tabla_global")
           )
         )
       ),
@@ -100,12 +135,17 @@ shinyUI(dashboardPage(
               selectInput("sel_fecha_sesion", "Fecha", choices = NULL))
         ),
         fluidRow(
-          valueBoxOutput("box_dist"),
-          valueBoxOutput("box_tiempo"),
-          valueBoxOutput("box_ritmo"),
-          valueBoxOutput("box_cad"),
-          valueBoxOutput("box_fc"),
-          valueBoxOutput("box_fc_max")
+          valueBoxOutput("box_dist",    width = 2),
+          valueBoxOutput("box_tiempo",  width = 2),
+          valueBoxOutput("box_ritmo",   width = 2),
+          valueBoxOutput("box_cad",     width = 2),
+          valueBoxOutput("box_fc",      width = 2),
+          valueBoxOutput("box_fc_max",  width = 2)
+        ),
+        fluidRow(
+          valueBoxOutput("box_calorias", width = 4),
+          valueBoxOutput("box_ascenso",  width = 4),
+          valueBoxOutput("box_zancada",  width = 4)
         ),
         fluidRow(
           box(width = 12, title = "FC y Ritmo a lo largo de la sesión",
@@ -118,7 +158,10 @@ shinyUI(dashboardPage(
               plotlyOutput("plot_sesion_cad_alt", height = "300px"))
         ),
         fluidRow(
-          box(width = 12, title = "Análisis por laps (km a km)",
+          box(width = 5, title = "Ficha de la sesion",
+              status = "primary", solidHeader = TRUE,
+              tableOutput("tabla_resumen_sesion")),
+          box(width = 7, title = "Analisis por laps (km a km)",
               status = "success", solidHeader = TRUE,
               tableOutput("tabla_laps"))
         )

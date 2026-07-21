@@ -321,16 +321,33 @@ parse_csv <- function(path, nombre_archivo) {
     names(df) <- norm(names(df))
 
     col_map <- list(
-      fecha          = c("fecha","date"),
-      distancia_km   = c("distancia","distance","distancia_km"),
-      tiempo_hms     = c("tiempo","time","duracion"),
-      ritmo_medio    = c("ritmo_medio","avg_pace","ritmo_medio_min_km","pace"),
-      cadencia_media = c("cadencia_de_carrera_media","avg_run_cadence","cadencia_media","cadencia"),
-      fc_media       = c("frecuencia_cardiaca_media","avg_hr","fc_media","frecuencia_cardiaca"),
-      fc_max         = c("frecuencia_cardiaca_maxima","max_hr","fc_max"),
-      altitud_max    = c("altitud_maxima","max_elev","altitud_max"),
-      altitud_min    = c("altitud_minima","min_elev","altitud_min"),
-      temp_media     = c("temperatura_media","avg_temp","temperatura")
+      fecha           = c("fecha","date","actividad"),
+      distancia_km    = c("distancia","distance","distancia_km"),
+      tiempo_hms      = c("tiempo","time","duracion","tiempo_en_movimiento","tiempo_transcurrido"),
+      ritmo_medio     = c("ritmo_medio","avg_pace","ritmo_medio_min_km","pace"),
+      ritmo_optimo    = c("ritmo_optimo","best_pace"),
+      cadencia_media  = c("cadencia_de_carrera_media","avg_run_cadence","cadencia_media","cadencia"),
+      cadencia_max    = c("cadencia_de_carrera_maxima","max_run_cadence","cadencia_maxima"),
+      fc_media        = c("frecuencia_cardiaca_media","avg_hr","fc_media","frecuencia_cardiaca"),
+      fc_max          = c("frecuencia_cardiaca_maxima","max_hr","fc_max"),
+      altitud_max     = c("altura_maxima","altitud_maxima","max_elev","altitud_max"),
+      altitud_min     = c("altura_minima","altitud_minima","min_elev","altitud_min"),
+      temp_max        = c("temperatura_maxima","max_temp","temperatura_max"),
+      temp_min        = c("temperatura_minima","min_temp","temperatura_min"),
+      temp_media      = c("temperatura_media","avg_temp","temperatura"),
+      calorias        = c("calorias","calories","cal"),
+      ascenso_total   = c("ascenso_total","total_ascent","ascenso"),
+      descenso_total  = c("descenso_total","total_descent","descenso"),
+      zancada_media   = c("longitud_media_de_zancada","avg_stride_length","zancada_media","longitud_zancada"),
+      te_aerobico     = c("te_aerobico","aerobic_te","efecto_entrenamiento_aerobico"),
+      relacion_vert   = c("relacion_vertical_media","avg_vertical_ratio"),
+      oscilacion_vert = c("oscilacion_vertical_media","avg_vertical_oscillation"),
+      contacto_suelo  = c("tiempo_medio_de_contacto_con_el_suelo","avg_ground_contact_time"),
+      pasos           = c("pasos","steps"),
+      n_vueltas       = c("numero_de_vueltas","laps","vueltas"),
+      tss             = c("training_stress_score","tss"),
+      tiempo_movim    = c("tiempo_en_movimiento","moving_time"),
+      tipo_actividad  = c("tipo_de_actividad","activity_type","tipo")
     )
 
     gc <- function(candidates) {
@@ -347,22 +364,41 @@ parse_csv <- function(path, nombre_archivo) {
     ritmo_s    <- sapply(ritmo_raw, pace_str_to_secs)
     tiempo_s   <- sapply(tiempo_raw, tiempo_str_to_secs)
 
+    asnum <- function(x) suppressWarnings(as.numeric(gsub(",",".",as.character(x))))
+
     resumen <- data.frame(
-      archivo        = nombre_archivo,
-      fecha          = fecha_p,
-      distancia_km   = round(dist_num, 2),
-      tiempo_s       = round(tiempo_s),
-      tiempo_hms     = tiempo_raw,
-      ritmo_medio    = ritmo_raw,
-      ritmo_medio_s  = ritmo_s,
-      cadencia_media = round(suppressWarnings(as.numeric(gc(col_map$cadencia_media)))),
-      fc_media       = round(suppressWarnings(as.numeric(gc(col_map$fc_media)))),
-      fc_max         = round(suppressWarnings(as.numeric(gc(col_map$fc_max)))),
-      altitud_max    = round(suppressWarnings(as.numeric(gc(col_map$altitud_max)))),
-      altitud_min    = round(suppressWarnings(as.numeric(gc(col_map$altitud_min)))),
-      temp_media     = round(suppressWarnings(as.numeric(gc(col_map$temp_media))), 1),
-      n_records      = NA_integer_,
-      formato        = "csv",
+      archivo         = nombre_archivo,
+      fecha           = fecha_p,
+      distancia_km    = round(dist_num, 2),
+      tiempo_s        = round(tiempo_s),
+      tiempo_hms      = tiempo_raw,
+      ritmo_medio     = ritmo_raw,
+      ritmo_medio_s   = ritmo_s,
+      ritmo_optimo    = as.character(gc(col_map$ritmo_optimo)),
+      cadencia_media  = round(asnum(gc(col_map$cadencia_media))),
+      cadencia_max    = round(asnum(gc(col_map$cadencia_max))),
+      fc_media        = round(asnum(gc(col_map$fc_media))),
+      fc_max          = round(asnum(gc(col_map$fc_max))),
+      altitud_max     = round(asnum(gc(col_map$altitud_max))),
+      altitud_min     = round(asnum(gc(col_map$altitud_min))),
+      temp_max        = round(asnum(gc(col_map$temp_max)), 1),
+      temp_min        = round(asnum(gc(col_map$temp_min)), 1),
+      temp_media      = round(asnum(gc(col_map$temp_media)), 1),
+      calorias        = round(asnum(gc(col_map$calorias))),
+      ascenso_total   = round(asnum(gc(col_map$ascenso_total))),
+      descenso_total  = round(asnum(gc(col_map$descenso_total))),
+      zancada_media   = round(asnum(gc(col_map$zancada_media)), 2),
+      te_aerobico     = round(asnum(gc(col_map$te_aerobico)), 1),
+      relacion_vert   = round(asnum(gc(col_map$relacion_vert)), 1),
+      oscilacion_vert = round(asnum(gc(col_map$oscilacion_vert)), 1),
+      contacto_suelo  = round(asnum(gc(col_map$contacto_suelo))),
+      pasos           = round(asnum(gc(col_map$pasos))),
+      n_vueltas       = round(asnum(gc(col_map$n_vueltas))),
+      tss             = round(asnum(gc(col_map$tss)), 1),
+      tiempo_movim    = as.character(gc(col_map$tiempo_movim)),
+      tipo_actividad  = as.character(gc(col_map$tipo_actividad)),
+      n_records       = NA_integer_,
+      formato         = "csv",
       stringsAsFactors = FALSE
     ) %>% filter(!is.na(fecha))
 
@@ -423,18 +459,21 @@ shinyServer(function(input, output, session) {
   # ── Tab 1: Datos ────────────────────────────────────────────────────────────
   output$tabla_sesiones <- renderTable({
     req(sesiones())
-    sesiones() %>% select(
-      Formato        = formato,
-      Archivo        = archivo,
-      Fecha          = fecha,
-      `Dist (km)`    = distancia_km,
-      Tiempo         = tiempo_hms,
-      `Ritmo medio`  = ritmo_medio,
-      `Cadencia (pmm)` = cadencia_media,
-      `FC media`     = fc_media,
-      `FC max`       = fc_max,
-      `Temp (C)`     = temp_media
-    )
+    sesiones() %>%
+      arrange(desc(fecha)) %>%                          # Fix 3: reciente primero
+      mutate(fecha = format(as.Date(fecha), "%Y-%m-%d")) %>%  # Fix 2: formato fecha
+      select(
+        Formato          = formato,
+        Archivo          = archivo,
+        Fecha            = fecha,
+        `Dist (km)`      = distancia_km,
+        Tiempo           = tiempo_hms,
+        `Ritmo medio`    = ritmo_medio,
+        `Cadencia (pmm)` = cadencia_media,
+        `FC media`       = fc_media,
+        `FC max`         = fc_max,
+        `Temp (C)`       = temp_media
+      )
   }, striped=TRUE, hover=TRUE, bordered=TRUE)
 
   output$errores_carga <- renderUI({
@@ -455,14 +494,123 @@ shinyServer(function(input, output, session) {
   # ── Poblar selectInputs en todas las tabs ───────────────────────────────────
   observe({
     req(sesiones())
-    fechas <- as.character(sesiones()$fecha)
-    updateSelectInput(session, "sel_fecha_sesion", choices=fechas)
-    updateSelectInput(session, "sel_fecha_cardio", choices=fechas)
-    updateSelectInput(session, "sel_fecha_bio",    choices=fechas)
-    updateSelectInput(session, "comp_fecha_1",     choices=fechas)
+    # Fix 3: orden descendente — sesion mas reciente primero en todos los selectores
+    fechas <- as.character(sort(unique(as.Date(sesiones()$fecha)), decreasing=TRUE))
+    updateSelectInput(session, "sel_fecha_sesion", choices=fechas, selected=fechas[1])
+    updateSelectInput(session, "sel_fecha_cardio", choices=fechas, selected=fechas[1])
+    updateSelectInput(session, "sel_fecha_bio",    choices=fechas, selected=fechas[1])
+    updateSelectInput(session, "comp_fecha_1",     choices=fechas, selected=fechas[1])
     updateSelectInput(session, "comp_fecha_2",     choices=fechas,
                       selected=if(length(fechas)>1) fechas[2] else fechas[1])
   })
+
+  # ── Tab 1b: Informacion global ─────────────────────────────────────────────
+  output$box_g_sesiones <- renderValueBox(valueBox(
+    nrow(sesiones()), "Sesiones", icon("list"), color="blue"))
+
+  output$box_g_distancia <- renderValueBox(valueBox(
+    paste(round(sum(sesiones()$distancia_km, na.rm=TRUE), 1), "km"),
+    "Distancia total", icon("road"), color="navy"))
+
+  output$box_g_tiempo <- renderValueBox(valueBox({
+    t <- sum(sesiones()$tiempo_s, na.rm=TRUE)
+    seconds_to_hms(t)
+  }, "Tiempo total", icon("clock"), color="green"))
+
+  output$box_g_ritmo <- renderValueBox(valueBox({
+    s <- mean(sesiones()$ritmo_medio_s, na.rm=TRUE)
+    paste(secs_to_pace_str(s), "/km")
+  }, "Ritmo promedio", icon("tachometer-alt"), color="yellow"))
+
+  output$box_g_cadencia <- renderValueBox(valueBox(
+    paste(round(mean(sesiones()$cadencia_media, na.rm=TRUE)), "pmm"),
+    "Cadencia promedio", icon("shoe-prints"), color="purple"))
+
+  output$box_g_fc <- renderValueBox(valueBox(
+    paste(round(mean(sesiones()$fc_media, na.rm=TRUE)), "bpm"),
+    "FC media global", icon("heartbeat"), color="fuchsia"))
+
+  output$box_g_calorias <- renderValueBox(valueBox(
+    paste(round(sum(sesiones()$calorias, na.rm=TRUE)), "kcal"),
+    "Calorias totales", icon("fire"), color="teal"))
+
+  output$box_g_ascenso <- renderValueBox(valueBox(
+    paste(round(sum(sesiones()$ascenso_total, na.rm=TRUE)), "m"),
+    "Ascenso total", icon("arrow-up"), color="red"))
+
+  output$box_g_zancada <- renderValueBox(valueBox(
+    paste(round(mean(sesiones()$zancada_media, na.rm=TRUE), 2), "m"),
+    "Zancada media", icon("shoe-prints"), color="blue"))
+
+  output$box_g_te <- renderValueBox(valueBox(
+    round(mean(sesiones()$te_aerobico, na.rm=TRUE), 1),
+    "TE aerobico promedio", icon("heartbeat"), color="maroon"))
+
+  output$box_g_cadencia_max <- renderValueBox(valueBox(
+    paste(round(mean(sesiones()$cadencia_max, na.rm=TRUE)), "pmm"),
+    "Cadencia max promedio", icon("shoe-prints"), color="purple"))
+
+  output$box_g_ritmo_opt <- renderValueBox(valueBox({
+    s <- mean(sapply(sesiones()$ritmo_optimo, pace_str_to_secs), na.rm=TRUE)
+    if (is.nan(s) || is.na(s)) "--" else paste(secs_to_pace_str(s), "/km")
+  }, "Ritmo optimo promedio", icon("tachometer-alt"), color="yellow"))
+
+  output$box_g_descenso <- renderValueBox(valueBox(
+    paste(round(sum(sesiones()$descenso_total, na.rm=TRUE)), "m"),
+    "Descenso total", icon("arrow-down"), color="red"))
+
+  output$box_g_relacion_vert <- renderValueBox(valueBox(
+    paste(round(mean(sesiones()$relacion_vert, na.rm=TRUE), 1), "%"),
+    "Relacion vertical media", icon("chart-line"), color="navy"))
+
+  output$box_g_fc_max <- renderValueBox(valueBox(
+    paste(round(max(sesiones()$fc_max, na.rm=TRUE)), "bpm"),
+    "FC maxima historica", icon("heart"), color="red"))
+
+  output$box_g_te2 <- renderValueBox(valueBox(
+    round(mean(sesiones()$te_aerobico, na.rm=TRUE), 1),
+    "TE aerobico medio", icon("heartbeat"), color="green"))
+
+  output$box_g_cad_media2 <- renderValueBox(valueBox(
+    paste(round(mean(sesiones()$cadencia_media, na.rm=TRUE)), "pmm"),
+    "Cadencia media global", icon("shoe-prints"), color="purple"))
+
+  output$box_g_cad_max2 <- renderValueBox(valueBox(
+    paste(round(mean(sesiones()$cadencia_max, na.rm=TRUE)), "pmm"),
+    "Cadencia max promedio", icon("shoe-prints"), color="blue"))
+
+  output$box_g_ritmo2 <- renderValueBox(valueBox({
+    s <- mean(sesiones()$ritmo_medio_s, na.rm=TRUE)
+    if (is.nan(s)||is.na(s)) "--" else paste(secs_to_pace_str(s), "/km")
+  }, "Ritmo medio global", icon("tachometer-alt"), color="yellow"))
+
+  output$box_g_ritmo_opt2 <- renderValueBox(valueBox({
+    s <- mean(sapply(sesiones()$ritmo_optimo, pace_str_to_secs), na.rm=TRUE)
+    if (is.nan(s)||is.na(s)) "--" else paste(secs_to_pace_str(s), "/km")
+  }, "Ritmo optimo promedio", icon("tachometer-alt"), color="orange"))
+
+  output$box_g_ascenso2 <- renderValueBox(valueBox(
+    paste(round(sum(sesiones()$ascenso_total, na.rm=TRUE)), "m"),
+    "Ascenso total", icon("arrow-up"), color="green"))
+
+  output$box_g_descenso2 <- renderValueBox(valueBox(
+    paste(round(sum(sesiones()$descenso_total, na.rm=TRUE)), "m"),
+    "Descenso total", icon("arrow-down"), color="red"))
+
+  output$tabla_global <- renderTable({
+    req(sesiones())
+    df <- sesiones()
+    # Seleccionar columnas disponibles dinamicamente
+    cols_disp <- intersect(
+      c("fecha","tipo_actividad","distancia_km","calorias","tiempo_hms",
+        "fc_media","fc_max","te_aerobico","cadencia_media","cadencia_max",
+        "ritmo_medio","ritmo_optimo","ascenso_total","descenso_total",
+        "zancada_media","relacion_vert","oscilacion_vert","contacto_suelo",
+        "pasos","n_vueltas","temp_min","temp_max","tiempo_movim","formato"),
+      names(df)
+    )
+    df %>% select(all_of(cols_disp)) %>% arrange(fecha)
+  }, striped=TRUE, hover=TRUE, bordered=TRUE)
 
   # ── Tab 2: Sesion ───────────────────────────────────────────────────────────
   sesion_sel <- reactive({
@@ -478,79 +626,198 @@ shinyServer(function(input, output, session) {
     laps_data()[[input$sel_fecha_sesion]]
   })
 
+  # Helper: extrae valor escalar seguro de sesion_sel (primera fila)
+  sv <- function(col) {
+    val <- sesion_sel()[[col]]
+    if (is.null(val) || length(val) == 0) return("--")
+    v <- val[1]
+    if (is.na(v)) "--" else as.character(v)
+  }
+
   output$box_dist   <- renderValueBox(valueBox(
-    paste(sesion_sel()$distancia_km, "km"), "Distancia", icon("road"), color="blue"))
+    paste(sv("distancia_km"), "km"), "Distancia", icon("road"), color="blue"))
   output$box_tiempo <- renderValueBox(valueBox(
-    sesion_sel()$tiempo_hms, "Tiempo", icon("clock"), color="navy"))
+    sv("tiempo_hms"), "Tiempo", icon("clock"), color="navy"))
   output$box_ritmo  <- renderValueBox(valueBox(
-    paste(sesion_sel()$ritmo_medio, "/km"), "Ritmo medio", icon("tachometer-alt"), color="green"))
+    paste(sv("ritmo_medio"), "/km"), "Ritmo medio", icon("tachometer-alt"), color="green"))
   output$box_cad    <- renderValueBox(valueBox(
-    paste(sesion_sel()$cadencia_media, "pmm"), "Cadencia", icon("shoe-prints"), color="purple"))
+    paste(sv("cadencia_media"), "pmm"), "Cadencia", icon("shoe-prints"), color="purple"))
   output$box_fc     <- renderValueBox(valueBox(
-    paste(sesion_sel()$fc_media, "bpm"), "FC media", icon("heartbeat"), color="red"))
+    paste(sv("fc_media"), "bpm"), "FC media", icon("heartbeat"), color="red"))
   output$box_fc_max <- renderValueBox(valueBox(
-    paste(sesion_sel()$fc_max, "bpm"), "FC max", icon("heart"), color="maroon"))
+    paste(sv("fc_max"), "bpm"), "FC max", icon("heart"), color="maroon"))
+  output$box_calorias <- renderValueBox(valueBox(
+    paste(sv("calorias"), "kcal"), "Calorias", icon("fire"), color="orange"))
+  output$box_ascenso  <- renderValueBox(valueBox(
+    paste(sv("ascenso_total"), "m"), "Ascenso", icon("arrow-up"), color="green"))
+  output$box_zancada  <- renderValueBox(valueBox(
+    paste(sv("zancada_media"), "m"), "Zancada media", icon("shoe-prints"), color="purple"))
+
+  # Mensaje cuando la sesion seleccionada es CSV (sin telemetria)
+  sin_telemetria <- function(titulo) {
+    plotly_empty() %>% layout(
+      title = paste(titulo, "— disponible solo con archivos .fit"),
+      annotations = list(list(
+        text = "Esta sesion fue cargada desde CSV.<br>Carga el archivo .fit correspondiente<br>para ver la telemetria segundo a segundo.",
+        x=0.5, y=0.5, xref="paper", yref="paper",
+        showarrow=FALSE, font=list(size=14, color="#888")
+      ))
+    )
+  }
 
   output$plot_sesion_fc_ritmo <- renderPlotly({
-    rec <- rec_sel(); req(!is.null(rec), nrow(rec) > 0)
+    rec <- rec_sel()
+    if (is.null(rec) || nrow(rec) == 0) return(sin_telemetria("FC y Ritmo"))
+    # Filtrar registros con al menos una de las dos metricas
+    rec <- rec %>% filter(!is.na(hr_bpm) | !is.na(pace_secs), !is.na(dist_km))
+    if (nrow(rec) == 0) return(sin_telemetria("FC y Ritmo"))
     plot_ly(rec, x=~dist_km) %>%
-      add_lines(y=~hr_bpm,    name="FC (bpm)",    line=list(color="#e74c3c"), yaxis="y1") %>%
-      add_lines(y=~pace_secs, name="Ritmo (s/km)",line=list(color="#2ecc71"), yaxis="y2") %>%
-      layout(title="FC y Ritmo a lo largo de la sesion",
-             xaxis=list(title="Distancia (km)"),
-             yaxis=list(title="FC (bpm)", side="left"),
-             yaxis2=list(title="Ritmo (s/km)", side="right",
-                         overlaying="y", autorange="reversed"),
-             legend=list(orientation="h"))
+      add_lines(y=~hr_bpm,    name="FC (bpm)",
+                line=list(color="#e74c3c"), yaxis="y1") %>%
+      add_lines(y=~pace_secs, name="Ritmo (s/km)",
+                line=list(color="#2ecc71"), yaxis="y2") %>%
+      layout(
+        title  = "FC y Ritmo a lo largo de la sesion",
+        xaxis  = list(title="Distancia (km)"),
+        yaxis  = list(title="FC (bpm)", side="left"),
+        yaxis2 = list(title="Ritmo (s/km)", side="right",
+                      overlaying="y", autorange="reversed"),
+        legend = list(orientation="h")
+      )
   })
 
   output$plot_sesion_cad_alt <- renderPlotly({
-    rec <- rec_sel(); req(!is.null(rec), nrow(rec) > 0)
+    rec <- rec_sel()
+    if (is.null(rec) || nrow(rec) == 0) return(sin_telemetria("Cadencia y Altitud"))
+    rec <- rec %>% filter(!is.na(cadence_spm) | !is.na(altitude_m), !is.na(dist_km))
+    if (nrow(rec) == 0) return(sin_telemetria("Cadencia y Altitud"))
     plot_ly(rec, x=~dist_km) %>%
-      add_lines(y=~cadence_spm, name="Cadencia (pmm)", line=list(color="#9b59b6")) %>%
-      add_lines(y=~altitude_m,  name="Altitud (m)",    line=list(color="#f39c12"), yaxis="y2") %>%
-      layout(title="Cadencia y Altitud",
-             xaxis=list(title="Distancia (km)"),
-             yaxis=list(title="Cadencia (pmm)"),
-             yaxis2=list(title="Altitud (m)", side="right", overlaying="y"),
-             legend=list(orientation="h"))
+      add_lines(y=~cadence_spm, name="Cadencia (pmm)",
+                line=list(color="#9b59b6")) %>%
+      add_lines(y=~altitude_m,  name="Altitud (m)",
+                line=list(color="#f39c12"), yaxis="y2") %>%
+      layout(
+        title  = "Cadencia y Altitud",
+        xaxis  = list(title="Distancia (km)"),
+        yaxis  = list(title="Cadencia (pmm)"),
+        yaxis2 = list(title="Altitud (m)", side="right", overlaying="y"),
+        legend = list(orientation="h")
+      )
   })
 
   output$tabla_laps <- renderTable({
-    req(laps_sel())
-    laps_sel() %>% rename(
-      Lap=lap_num, `Dist (km)`=lap_dist_km, `Tiempo (s)`=lap_time_s,
-      Ritmo=lap_pace_str, `FC media`=lap_hr,
-      Cadencia=lap_cadence, `Zancada (m)`=lap_stride)
+    laps <- laps_sel()
+    if (is.null(laps) || nrow(laps) == 0) {
+      return(data.frame(Info="Laps no disponibles para esta sesion (requiere .fit)"))
+    }
+    laps %>% rename(
+      Lap          = lap_num,
+      `Dist (km)`  = lap_dist_km,
+      `Tiempo (s)` = lap_time_s,
+      Ritmo        = lap_pace_str,
+      `FC media`   = lap_hr,
+      Cadencia     = lap_cadence,
+      `Zancada (m)`= lap_stride
+    )
   }, striped=TRUE, hover=TRUE, na="--")
 
-  # ── Tab 3: Evolucion ────────────────────────────────────────────────────────
-  mk_evol_plot <- function(df, y_var, y_label, color, reversed=FALSE) {
-    p <- ggplot(df, aes_string(x="fecha", y=y_var)) +
-      geom_line(color=color) + geom_point(color=color, size=2) +
-      geom_smooth(method="loess", se=TRUE, alpha=0.15, color=color) +
-      labs(x=NULL, y=y_label) + theme_minimal()
-    if (reversed) p <- p + scale_y_reverse()
-    ggplotly(p)
-  }
+  # Ficha resumen de la sesion — funciona con CSV y con FIT
+  output$tabla_resumen_sesion <- renderTable({
+    req(sesion_sel())
+    s <- sesion_sel()[1, ]
+    # Construir tabla campo-valor con los campos disponibles
+    campos <- list(
+      list(n="Fecha",              v=as.character(s$fecha)),
+      list(n="Formato",            v=s$formato),
+      list(n="Distancia (km)",     v=as.character(s$distancia_km)),
+      list(n="Tiempo",             v=s$tiempo_hms),
+      list(n="Ritmo medio",        v=s$ritmo_medio),
+      list(n="Ritmo optimo",       v=if("ritmo_optimo" %in% names(s)) s$ritmo_optimo else "--"),
+      list(n="Cadencia media (pmm)",v=as.character(s$cadencia_media)),
+      list(n="Cadencia max (pmm)", v=if("cadencia_max" %in% names(s)) as.character(s$cadencia_max) else "--"),
+      list(n="FC media (bpm)",     v=as.character(s$fc_media)),
+      list(n="FC max (bpm)",       v=as.character(s$fc_max)),
+      list(n="Calorias (kcal)",    v=if("calorias" %in% names(s)) as.character(s$calorias) else "--"),
+      list(n="Ascenso total (m)",  v=if("ascenso_total" %in% names(s)) as.character(s$ascenso_total) else "--"),
+      list(n="Descenso total (m)", v=if("descenso_total" %in% names(s)) as.character(s$descenso_total) else "--"),
+      list(n="Zancada media (m)",  v=if("zancada_media" %in% names(s)) as.character(s$zancada_media) else "--"),
+      list(n="TE aerobico",        v=if("te_aerobico" %in% names(s)) as.character(s$te_aerobico) else "--"),
+      list(n="Relacion vertical",  v=if("relacion_vert" %in% names(s)) as.character(s$relacion_vert) else "--"),
+      list(n="Temp min (C)",       v=if("temp_min" %in% names(s)) as.character(s$temp_min) else "--"),
+      list(n="Temp max (C)",       v=if("temp_max" %in% names(s)) as.character(s$temp_max) else "--")
+    )
+    data.frame(
+      Campo = sapply(campos, `[[`, "n"),
+      Valor = sapply(campos, function(x) if(is.na(x$v)) "--" else x$v),
+      stringsAsFactors = FALSE
+    )
+  }, striped=TRUE, hover=TRUE, bordered=TRUE)
 
-  output$plot_evol_distancia  <- renderPlotly({
-    req(sesiones()); mk_evol_plot(sesiones() %>% arrange(fecha),
-      "distancia_km", "km", "#1f77b4")})
-  output$plot_evol_ritmo      <- renderPlotly({
-    req(sesiones()); mk_evol_plot(sesiones() %>% arrange(fecha),
-      "ritmo_medio_s", "s/km", "#2ca02c", reversed=TRUE)})
-  output$plot_evol_cadencia   <- renderPlotly({
-    req(sesiones()); mk_evol_plot(sesiones() %>% arrange(fecha),
-      "cadencia_media", "pmm", "#9467bd")})
-  output$plot_evol_fc         <- renderPlotly({
-    req(sesiones()); mk_evol_plot(sesiones() %>% arrange(fecha),
-      "fc_media", "bpm", "#d62728")})
+  # ── Tab 3: Evolucion ────────────────────────────────────────────────────────
+  # Fix 4: tipos de grafica por metrica
+  output$plot_evol_distancia <- renderPlotly({
+    req(sesiones())
+    df <- sesiones() %>% arrange(fecha) %>%
+      mutate(fecha_str = format(as.Date(fecha), "%Y-%m-%d"))
+    p <- ggplot(df, aes(x=fecha, y=distancia_km,
+                         text=paste("Fecha:", fecha_str, "<br>Dist:", distancia_km, "km"))) +
+      geom_histogram(stat="identity", fill="#1f77b4", width=5) +
+      labs(x=NULL, y="km") + theme_minimal()
+    ggplotly(p, tooltip="text")
+  })
+
+  output$plot_evol_ritmo <- renderPlotly({
+    req(sesiones())
+    df <- sesiones() %>% arrange(fecha) %>%
+      mutate(fecha_str = format(as.Date(fecha), "%Y-%m-%d"))
+    p <- ggplot(df, aes(x=fecha, y=ritmo_medio_s,
+                         text=paste("Fecha:", fecha_str, "<br>Ritmo:", ritmo_medio, "/km"))) +
+      geom_line(color="#2ca02c", size=1) +
+      geom_point(color="#2ca02c", size=2.5) +
+      scale_y_reverse(labels=function(s) secs_to_pace_str(s)) +
+      labs(x=NULL, y="min/km") + theme_minimal()
+    ggplotly(p, tooltip="text")
+  })
+
+  output$plot_evol_cadencia <- renderPlotly({
+    req(sesiones())
+    df <- sesiones() %>% arrange(fecha) %>%
+      mutate(fecha_str = format(as.Date(fecha), "%Y-%m-%d"))
+    p <- ggplot(df, aes(x=fecha, y=cadencia_media,
+                         text=paste("Fecha:", fecha_str, "<br>Cadencia:", cadencia_media, "pmm"))) +
+      geom_line(color="#9467bd", size=1) +
+      geom_point(color="#9467bd", size=2.5) +
+      labs(x=NULL, y="pmm") + theme_minimal()
+    ggplotly(p, tooltip="text")
+  })
+
+  output$plot_evol_fc <- renderPlotly({
+    req(sesiones())
+    df <- sesiones() %>% arrange(fecha) %>%
+      mutate(fecha_str = format(as.Date(fecha), "%Y-%m-%d"))
+    p <- ggplot(df, aes(x=fecha, y=fc_media,
+                         text=paste("Fecha:", fecha_str, "<br>FC:", fc_media, "bpm"))) +
+      geom_line(color="#d62728", size=1) +
+      geom_point(color="#d62728", size=2.5) +
+      labs(x=NULL, y="bpm") + theme_minimal()
+    ggplotly(p, tooltip="text")
+  })
+
   output$plot_evol_eficiencia <- renderPlotly({
     req(sesiones())
     df <- sesiones() %>% arrange(fecha) %>%
-      mutate(eficiencia = ritmo_medio_s / fc_media)
-    mk_evol_plot(df, "eficiencia", "s/km/bpm", "#ff7f0e", reversed=TRUE)
+      mutate(
+        eficiencia  = ritmo_medio_s / fc_media,
+        fecha_str   = format(as.Date(fecha), "%Y-%m-%d")
+      )
+    p <- ggplot(df, aes(x=fecha, y=eficiencia,
+                         text=paste("Fecha:", fecha_str,
+                                    "<br>Eficiencia:", round(eficiencia, 2)))) +
+      geom_area(fill="#ff7f0e", alpha=0.4) +
+      geom_line(color="#ff7f0e", size=1) +
+      scale_y_reverse() +
+      labs(x=NULL, y="s/km/bpm") + theme_minimal()
+    ggplotly(p, tooltip="text")
   })
 
   # ── Tab 4: Comparar ─────────────────────────────────────────────────────────
