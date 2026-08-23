@@ -4,10 +4,10 @@ Baloto es la lotería más popular de Colombia, un juego de azar tipo loto admin
 
 ## Cómo se juega
 
-- **Formato actual (desde 2025):** Eliges **5 números principales del 1 al 43** + **1 Superbalota del 1 al 16**. [es.scribd](https://es.scribd.com/document/851924091/Baloto)
-- **Costo:** $6.000 COP por apuesta simple (incluye Baloto + Revancha automática). [mundovideo.com](https://www.mundovideo.com.co/coljuegoseice/coljuegos-aprueba-cambios-al-reglamento-de-baloto-nuevos-precios-sorteos-y-premios/)
-- **Sorteos:** **Lunes, miércoles y sábados** a las 10:00 p.m., transmitidos en vivo. [deportivas.com](https://deportivas.com.co/plan-de-premios-del-baloto-cuanto-paga-por-numeros-acertados)
-- **Opciones adicionales:** Revancha (mismo sorteo, premio separado de $2.000 millones iniciales) y Multiplicador opcional. [loteriasdehoy](https://loteriasdehoy.co/baloto)
+- Formato actual (desde 2025): Eliges 5 números principales del 1 al 43 + 1 Superbalota del 1 al 16. [es.scribd](https://es.scribd.com/document/851924091/Baloto)
+- Costo: $6.000 COP por apuesta simple (incluye Baloto + Revancha automática). [mundovideo.com](https://www.mundovideo.com.co/coljuegoseice/coljuegos-aprueba-cambios-al-reglamento-de-baloto-nuevos-precios-sorteos-y-premios/)
+- Sorteos: lunes, miércoles y sábados a las 10:00 p.m., transmitidos en vivo. [deportivas.com](https://deportivas.com.co/plan-de-premios-del-baloto-cuanto-paga-por-numeros-acertados)
+- Opciones adicionales: Revancha (mismo sorteo, premio separado de $2.000 millones iniciales) y Multiplicador opcional. [loteriasdehoy](https://loteriasdehoy.co/baloto)
 
 ## Plan de premios (aproximado, variable)
 
@@ -22,12 +22,12 @@ Baloto es la lotería más popular de Colombia, un juego de azar tipo loto admin
 | 2 + Superbalota   | $12K                         |
 | 1/0 + Superbalota | $6K                          |
 
-- **Probabilidad premio mayor:** 1 en 15.401.568 combinaciones. [occidente](https://occidente.co/colombia/que-probabilidad-hay-de-ganarse-el-baloto/)
-- **Pago:** En puntos autorizados (hasta $10M) o bancos/Coljuegos (premios mayores); requieren identificación. [baloto](https://baloto.com/pago-de-premios)
+- Probabilidad de premio mayor: 1 en 15.401.568 combinaciones. [Occidente](https://occidente.co/colombia/que-probabilidad-hay-de-ganarse-el-baloto/)
+- Pago: En puntos autorizados (hasta $10M) o bancos/Coljuegos (premios mayores); requieren identificación. [baloto](https://baloto.com/pago-de-premios)
 
 ## Resultados recientes (febrero 2026)
 
-El jackpot principal sigue **acumulándose** (sin ganadores recientes del 5+1). [resultadobaloto](https://www.resultadobaloto.com/resultados.php)
+El jackpot principal sigue acumulándose (sin ganadores recientes del 5+1). [resultadobaloto](https://www.resultadobaloto.com/resultados.php)
 
 | Fecha       | Números principales | Superbalota | Notas (Revancha) |
 |-------------|---------------------|-------------|------------------|
@@ -40,9 +40,9 @@ Datos completos en baloto.com/resultados. [baloto](https://baloto.com/resultados
 
 ## Dónde jugar
 
-- **Puntos físicos:** Más de 10.000 puntos autorizados en Colombia.  
-- **En línea:** Plataformas autorizadas como baloto.com o apps oficiales. [baloto](https://baloto.com)
-- **Edad mínima:** 18 años. [coljuegos.gov](https://www.coljuegos.gov.co/publicaciones/300629/baloto/)
+- Puntos físicos: Más de 10.000 puntos autorizados en Colombia.  
+- En línea: plataformas autorizadas como baloto.com o apps oficiales. [baloto](https://baloto.com)
+- Edad mínima: 18 años. [coljuegos.gov](https://www.coljuegos.gov.co/publicaciones/300629/baloto/)
 
 Baloto genera fondos para programas sociales; recuerda que es entretenimiento, no inversión (valor esperado negativo). [focusgn](https://focusgn.com/latinoamerica/como-se-juega-el-baloto)
 
@@ -61,39 +61,39 @@ Esta aplicación busca analizar los sorteos, simular sorteos y predecir conjunto
 4. Validación estadística - Pruebas de hipótesis
 
 #### Tecnología:
-- **Frontend**: Shiny Dashboard + Plotly + DT
-- **Backend**: R + Tidyverse
-- **Datos**: Web scraping en tiempo real
-- **Visualización**: Gráficos interactivos
+- Frontend: Shiny Dashboard + Plotly + DT
+- Backend: R + Tidyverse
+- Datos: Web scraping en tiempo real
+- Visualización: Gráficos interactivos
 
 ##  Funcionalidades Implementadas
 
 ### 1.  Base de datos
--  **Scraping automático** desde resultadobaloto.com
--  **Limpieza y validación** de datos
--  **Tabla interactiva** con todos los sorteos históricos
--  **Actualización manual** con un botón
+-  Scraping automático desde resultadobaloto.com
+-  Limpieza y validación de datos
+-  Tabla interactiva con todos los sorteos históricos
+-  Actualización manual con un botón
 
 ### 2.  Análisis Univariado
 
 #### Distribuciones:
--  **Histogramas interactivos** por balota
--  **Diagramas de caja** por posición
--  **Estadísticos descriptivos** completos
--  **Frecuencias globales** tabuladas
+-  Histogramas interactivos por balota
+-  Diagramas de caja por posición
+-  Estadísticos descriptivos completos
+-  Frecuencias globales tabuladas
 
 #### Tendencias:
--  **Series temporales** de promedios acumulados
--  **Medias móviles** configurables
--  **Visualización comparativa** entre balotas
+-  Series temporales de promedios acumulados
+-  Medias móviles configurables
+-  Visualización comparativa entre balotas
 
 ### 3.  Análisis Multivariado
 
 #### Por Posición:
--  **Heatmap interactivo** frecuencias vs posición
--  **Tabla de contingencia** detallada
--  **Histogramas comparativos** entre posiciones
--  **Exportación** a CSV
+-  Heatmap interactivo frecuencias vs posición
+-  Tabla de contingencia detallada
+-  Histogramas comparativos entre posiciones
+-  Exportación a CSV
 
 #### Correlaciones:
 -  *En desarrollo* - Matriz de correlación
@@ -106,16 +106,16 @@ Esta aplicación busca analizar los sorteos, simular sorteos y predecir conjunto
 ##  Experiencia de usuario
 
 ### Interfaz:
--  **Menú jerárquico** organizado por módulos
--  **Navegación intuitiva** entre pestañas
--  **Controles contextuales** (solo donde son relevantes)
--  **Responsive design** adaptable a diferentes pantallas
+-  Menú jerárquico organizado por módulos
+-  Navegación intuitiva entre pestañas
+-  Controles contextuales (solo donde son relevantes)
+-  Responsive design adaptable a diferentes pantallas
 
 ### Interactividad:
--  **Tooltips informativos** en todos los gráficos
--  **Filtros dinámicos** y selectores
--  **Zoom y pan** en series temporales
--  **Descarga de datos** en formatos estándar
+-  Tooltips informativos en todos los gráficos
+-  Filtros dinámicos y selectores
+-  Zoom y pan en series temporales
+-  Descarga de datos en formatos estándar
 
 ##  Capacidades Analíticas Actuales
 
@@ -139,37 +139,37 @@ Esta aplicación busca analizar los sorteos, simular sorteos y predecir conjunto
 ##  Logros técnicos
 
 ### Código:
--  **Arquitectura modular** y escalable
--  **Manejo robusto** de errores
--  **Funciones puras** y reactivas
--  **Sin dependencias** externas problemáticas
+-  Arquitectura modular y escalable
+-  Manejo robusto de errores
+-  Funciones puras y reactivas
+-  Sin dependencias externas problemáticas
 
 ### Datos:
--  **Pipeline automatizado** de adquisición
--  **Transformaciones** eficientes con dplyr
--  **Estructura consistente** en todos los análisis
+-  Pipeline automatizado de adquisición
+-  Transformaciones eficientes con dplyr
+-  Estructura consistente en todos los análisis
 
 ### Performance:
--  **Carga rápida** de visualizaciones
--  **Interactividad** sin lag
--  **Manejo eficiente** de datos en memoria
+-  Carga rápida de visualizaciones
+-  Interactividad sin lag
+-  Manejo eficiente de datos en memoria
 
 ##  Próximos Pasos Naturales
 
 ### Corto Plazo (Fase 1.5):
-1. **Completar módulo de Correlaciones**
-2. **Implementar pruebas estadísticas** de uniformidad
-3. **Añadir números "calientes/fríos"**
+1. Completar módulo de Correlaciones
+2. Implementar pruebas estadísticas de uniformidad
+3. Añadir números "calientes/fríos"
 
 ### Mediano Plazo (Fase 2):
-1. **Módulo de Simulación** de sorteos
-2. **Análisis de números atrasados**
-3. **Sistema de alertas** automáticas
+1. Módulo de Simulación de sorteos
+2. Análisis de números atrasados
+3. Sistema de alertas automáticas
 
 ### Largo Plazo (Fase 3):
-1. **Modelos predictivos** básicos
-2. **Análisis de clusters** de números
-3. **Dashboard ejecutivo** con KPIs
+1. Modelos predictivos básicos
+2. Análisis de clusters de números
+3. Dashboard ejecutivo con KPIs
 
 ##  Valor agregado actual
 
@@ -190,10 +190,10 @@ Esta aplicación busca analizar los sorteos, simular sorteos y predecir conjunto
 
 ##  Conclusión
 
-**Se busca construir una aplicación de análisis de datos profesional** que:
+Se busca construir una aplicación de análisis de datos profesional que:
 
--  **Automatiza** la recolección y limpieza de datos
--  **Visualiza** patrones complejos de manera intuitiva  
--  **Valida** supuestos estadísticos robustamente
--  **Escala** fácilmente para nuevos análisis
--  **Comunica** insights de manera efectiva
+-  Automatiza la recolección y limpieza de datos
+-  Visualiza patrones complejos de manera intuitiva  
+-  Valida supuestos estadísticos robustamente
+-  Escala fácilmente para nuevos análisis
+-  Comunica insights de manera efectiva
