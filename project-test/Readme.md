@@ -1,199 +1,98 @@
-# Baloto
+# Baloto Analyzer
 
-Baloto es la lotería más popular de Colombia, un juego de azar tipo loto administrado por Coljuegos que ofrece premios multimillonarios acumulados. [baloto](https://baloto.com/que-es-baloto)
+Aplicación exploratoria en R y Shiny para consultar resultados históricos de Baloto y visualizar frecuencias por número y posición, distribuciones y resúmenes temporales. El proyecto está en una etapa de prototipo: los datos se obtienen en tiempo de ejecución desde una página web de terceros y no se guardan en una base de datos local.
 
-## Cómo se juega
+## Estado actual
 
-- Formato actual (desde 2025): Eliges 5 números principales del 1 al 43 + 1 Superbalota del 1 al 16. [es.scribd](https://es.scribd.com/document/851924091/Baloto)
-- Costo: $6.000 COP por apuesta simple (incluye Baloto + Revancha automática). [mundovideo.com](https://www.mundovideo.com.co/coljuegoseice/coljuegos-aprueba-cambios-al-reglamento-de-baloto-nuevos-precios-sorteos-y-premios/)
-- Sorteos: lunes, miércoles y sábados a las 10:00 p.m., transmitidos en vivo. [deportivas.com](https://deportivas.com.co/plan-de-premios-del-baloto-cuanto-paga-por-numeros-acertados)
-- Opciones adicionales: Revancha (mismo sorteo, premio separado de $2.000 millones iniciales) y Multiplicador opcional. [loteriasdehoy](https://loteriasdehoy.co/baloto)
+El código implementa estas funciones:
 
-## Plan de premios (aproximado, variable)
+- Obtiene una tabla HTML desde `resultadobaloto.com` y transforma fecha, combinación principal y Superbalota.
+- Muestra los resultados cargados en una tabla interactiva.
+- Calcula y grafica frecuencias globales por balota.
+- Presenta distribuciones por posición mediante diagramas de caja, histogramas, tabla de frecuencias y mapa de calor.
+- Calcula promedios acumulados y medias móviles con tamaño de ventana configurable.
+- Permite descargar como CSV la tabla de frecuencias por posición.
+- Muestra errores de adquisición y ofrece volver a intentar la carga.
 
-| Aciertos          | Premio típico (millones COP) |
-|-------------------|------------------------------|
-| 5 + Superbalota   | Acumulado ($4.300M inicial, crece)  [baloto](https://baloto.com/que-es-baloto) |
-| 5 + 0             | $30-50M  [resultadobaloto](https://www.resultadobaloto.com/resultados.php)     |
-| 4 + Superbalota   | $1-2M  [loteriasdehoy](https://loteriasdehoy.co/baloto)               |
-| 4 + 0             | $100-200K                    |
-| 3 + Superbalota   | $50-60K                      |
-| 3 + 0             | $10K                         |
-| 2 + Superbalota   | $12K                         |
-| 1/0 + Superbalota | $6K                          |
+La navegación también muestra apartados para correlaciones, pruebas estadísticas y aleatoriedad, pero sus componentes de análisis no están conectados en el servidor. Aunque se mencionan en el README anterior, no hay una base de datos histórica local, simulación de sorteos ni capacidad predictiva implementadas.
 
-- Probabilidad de premio mayor: 1 en 15.401.568 combinaciones. [Occidente](https://occidente.co/colombia/que-probabilidad-hay-de-ganarse-el-baloto/)
-- Pago: En puntos autorizados (hasta $10M) o bancos/Coljuegos (premios mayores); requieren identificación. [baloto](https://baloto.com/pago-de-premios)
+## Requisitos
 
-## Resultados recientes (febrero 2026)
+- R 4.x.
+- Conexión a Internet para obtener la tabla de resultados.
+- Paquetes de R: `shiny`, `shinydashboard`, `DT`, `plotly`, `shinyjs`, `rvest` y `tidyverse`.
 
-El jackpot principal sigue acumulándose (sin ganadores recientes del 5+1). [resultadobaloto](https://www.resultadobaloto.com/resultados.php)
+Instala las dependencias desde R:
 
-| Fecha       | Números principales | Superbalota | Notas (Revancha) |
-|-------------|---------------------|-------------|------------------|
-| 16/02/2026 | 09-18-21-22-42     | 14         | Acumulado $22.400M  [mundonets](https://www.mundonets.com/baloto/) |
-| 14/02/2026 | 15-21-29-34-35     | 06         | 1 ganador 5+0 ($46M)  [resultadobaloto](https://www.resultadobaloto.com/resultados.php) |
-| 11/02/2026 | 09-14-30-36-42     | 06         | Acumulado        |
-| 09/02/2026 | 11-17-20-36-38     | 14         | 1 ganador 5+0 ($17M) |
-
-Datos completos en baloto.com/resultados. [baloto](https://baloto.com/resultados)
-
-## Dónde jugar
-
-- Puntos físicos: Más de 10.000 puntos autorizados en Colombia.  
-- En línea: plataformas autorizadas como baloto.com o apps oficiales. [baloto](https://baloto.com)
-- Edad mínima: 18 años. [coljuegos.gov](https://www.coljuegos.gov.co/publicaciones/300629/baloto/)
-
-Baloto genera fondos para programas sociales; recuerda que es entretenimiento, no inversión (valor esperado negativo). [focusgn](https://focusgn.com/latinoamerica/como-se-juega-el-baloto)
-
-# Proyecto Baloto Analyzer
-
-Esta aplicación busca analizar los sorteos, simular sorteos y predecir conjuntos de números de Baloto. 
-
-##  Estado Actual: Fase 1 Completada
-
-### Arquitectura Implementada
-
-#### Módulos Principales:
-1. Base de datos - Fuente única de verdad
-2. Análisis univariado - Estadísticas individuales
-3. Análisis multivariado - Relaciones entre variables
-4. Validación estadística - Pruebas de hipótesis
-
-#### Tecnología:
-- Frontend: Shiny Dashboard + Plotly + DT
-- Backend: R + Tidyverse
-- Datos: Web scraping en tiempo real
-- Visualización: Gráficos interactivos
-
-##  Funcionalidades Implementadas
-
-### 1.  Base de datos
--  Scraping automático desde resultadobaloto.com
--  Limpieza y validación de datos
--  Tabla interactiva con todos los sorteos históricos
--  Actualización manual con un botón
-
-### 2.  Análisis Univariado
-
-#### Distribuciones:
--  Histogramas interactivos por balota
--  Diagramas de caja por posición
--  Estadísticos descriptivos completos
--  Frecuencias globales tabuladas
-
-#### Tendencias:
--  Series temporales de promedios acumulados
--  Medias móviles configurables
--  Visualización comparativa entre balotas
-
-### 3.  Análisis Multivariado
-
-#### Por Posición:
--  Heatmap interactivo frecuencias vs posición
--  Tabla de contingencia detallada
--  Histogramas comparativos entre posiciones
--  Exportación a CSV
-
-#### Correlaciones:
--  *En desarrollo* - Matriz de correlación
--  *En desarrollo* - Autocorrelación
-
-### 4.  Validación Estadística
--  *En desarrollo* - Pruebas de uniformidad
--  *En desarrollo* - Test de aleatoriedad
-
-##  Experiencia de usuario
-
-### Interfaz:
--  Menú jerárquico organizado por módulos
--  Navegación intuitiva entre pestañas
--  Controles contextuales (solo donde son relevantes)
--  Responsive design adaptable a diferentes pantallas
-
-### Interactividad:
--  Tooltips informativos en todos los gráficos
--  Filtros dinámicos y selectores
--  Zoom y pan en series temporales
--  Descarga de datos en formatos estándar
-
-##  Capacidades Analíticas Actuales
-
-### Detección de Patrones:
 ```r
-# Ejemplo de insights que puede generar:
-- "El número 7 aparece 12 veces en Balota 1 (frecuencia atípica)"
-- "SuperBalota muestra distribución uniforme (p-value > 0.05)"
-- "Tendencia alcista en Balota 3 últimos 20 sorteos"
+install.packages(c(
+  "shiny",
+  "shinydashboard",
+  "DT",
+  "plotly",
+  "shinyjs",
+  "rvest",
+  "tidyverse"
+))
+```
 
-### Validación de Supuestos:
-- Distribución esperada vs observada
-- Independencia entre sorteos
-- Uniformidad por posición
+## Ejecución
 
-### Visualización Profesional:
-- Heatmaps con escala de colores
-- Boxplots con medidas de dispersión
-- Series temporales con rangeslider
+Desde la raíz del repositorio:
 
-##  Logros técnicos
+```bash
+cd project-test
+R -e "shiny::runApp('.', port = 3536)"
+```
 
-### Código:
--  Arquitectura modular y escalable
--  Manejo robusto de errores
--  Funciones puras y reactivas
--  Sin dependencias externas problemáticas
+Desde RStudio, establece `project-test` como directorio de trabajo y ejecuta `shiny::runApp()`.
 
-### Datos:
--  Pipeline automatizado de adquisición
--  Transformaciones eficientes con dplyr
--  Estructura consistente en todos los análisis
+## Fuente y flujo de datos
 
-### Performance:
--  Carga rápida de visualizaciones
--  Interactividad sin lag
--  Manejo eficiente de datos en memoria
+La función `obtener_datos_reales()` descarga y analiza una página HTML concreta de `resultadobaloto.com/resultados.php`. La implementación selecciona la segunda tabla encontrada y espera encabezados específicos. Por ello, el resultado depende de la disponibilidad del sitio y de que su estructura HTML no cambie.
 
-##  Próximos Pasos Naturales
+Los datos se cargan al iniciar la sesión de Shiny y se vuelven a solicitar con **Actualizar Datos**. La interfaz muestra la fecha de consulta, no necesariamente la fecha del último sorteo incluido. No hay caché, snapshot versionado ni mecanismo de auditoría de los datos descargados.
 
-### Corto Plazo (Fase 1.5):
-1. Completar módulo de Correlaciones
-2. Implementar pruebas estadísticas de uniformidad
-3. Añadir números "calientes/fríos"
+## Análisis disponible
 
-### Mediano Plazo (Fase 2):
-1. Módulo de Simulación de sorteos
-2. Análisis de números atrasados
-3. Sistema de alertas automáticas
+- **Distribuciones:** frecuencias por balota y diagramas de caja por posición.
+- **Tendencias:** media acumulada o media móvil por balota; la ventana móvil se configura desde la interfaz.
+- **Por posición:** mapa de calor, histograma comparativo, tabla de contingencia y descarga CSV.
 
-### Largo Plazo (Fase 3):
-1. Modelos predictivos básicos
-2. Análisis de clusters de números
-3. Dashboard ejecutivo con KPIs
+Estas vistas son descriptivas. Una frecuencia o tendencia aparente no demuestra que un número tenga más probabilidad de salir en sorteos futuros.
 
-##  Valor agregado actual
+## Estructura
 
-### Para Investigadores:
-- Herramienta completa de análisis exploratorio
-- Visualizaciones listas para publicaciones
-- Datos actualizados automáticamente
+```text
+project-test/
+├── global.R   # Adquisición, transformación y funciones de análisis/gráficos
+├── ui.R       # Interfaz y navegación Shiny
+├── server.R   # Carga reactiva y conexión de cálculos con la interfaz
+└── Readme.md  # Documentación del proyecto
+```
 
-### Para Usuarios Generales:
-- Interfaz intuitiva sin necesidad de código
-- Análisis profundos con un clic
-- Transparencia total en los métodos
+## Límites conocidos
 
-### Para Desarrolladores:
-- Código bien estructurado y documentado
-- Fácil de extender y mantener
-- Ejemplo de mejores prácticas en Shiny
+- El scraping depende de un sitio de terceros y de la posición fija de una tabla HTML; un cambio del sitio puede interrumpir la carga o alterar los datos sin una validación suficiente.
+- No se valida de forma completa la estructura, unicidad, rangos ni continuidad de los sorteos después de la extracción.
+- Los datos descargados no quedan guardados. No es posible reproducir directamente un análisis anterior si la fuente cambia.
+- Los apartados de correlaciones, pruebas de uniformidad y aleatoriedad tienen elementos de interfaz, pero no salidas de servidor funcionales.
+- El botón **Actualizar Análisis** solo muestra una notificación; los cálculos reactivos ya se actualizan al cambiar sus dependencias.
+- Algunos textos de la interfaz afirman que hay filtros o una fuente oficial que no corresponden al flujo de datos implementado: la fuente del scraper es un sitio de terceros y no se ven controles de filtro por fecha conectados.
+- La función de frecuencias analiza las columnas numéricas devueltas por el scraper. Hay que comprobar explícitamente que el tratamiento de Superbalota y los espacios de números posibles sea correcto antes de interpretar comparaciones entre balotas.
+- No hay pruebas automatizadas ni fixtures versionados para comprobar el parsing y los cálculos.
 
-##  Conclusión
+## Perspectivas de desarrollo
 
-Se busca construir una aplicación de análisis de datos profesional que:
+1. **Hacer robusta la adquisición:** comprobar la respuesta HTTP, seleccionar tablas por contenido y validar encabezados, tipos, rangos, duplicados y fechas antes de aceptar resultados. Añadir mensajes claros ante cambios de la fuente.
+2. **Conservar procedencia:** guardar snapshots fechados de los datos crudos y normalizados, registrar fuente y fecha de consulta, y poder repetir los análisis sobre un conjunto identificado.
+3. **Definir el modelo de datos:** separar las cinco balotas principales de la Superbalota, representar cada sorteo con un identificador y documentar las reglas y rangos vigentes para cada periodo. No asumir que el reglamento fue constante a lo largo de todo el histórico.
+4. **Completar las pruebas estadísticas:** implementar pruebas apropiadas para el diseño y los rangos de cada posición, explicar supuestos y tamaño muestral, controlar comparaciones múltiples cuando aplique e incluir simulaciones bajo una hipótesis nula como referencia.
+5. **Alinear la interfaz con el servidor:** conectar los apartados de correlación y validación solo cuando sus análisis existan; de lo contrario, marcarlos como pendientes o retirarlos temporalmente. Corregir textos de filtros y fuente para que describan el comportamiento real.
+6. **Añadir pruebas y documentación de resultados:** crear datos de prueba pequeños, comprobar funciones de parsing y análisis, y documentar cómo reproducir cada estadístico y gráfico.
 
--  Automatiza la recolección y limpieza de datos
--  Visualiza patrones complejos de manera intuitiva  
--  Valida supuestos estadísticos robustamente
--  Escala fácilmente para nuevos análisis
--  Comunica insights de manera efectiva
+La prioridad recomendada es asegurar la integridad y reproducibilidad de los datos históricos. Después conviene completar las pruebas estadísticas. No se recomienda desarrollar “predicciones” o números calientes/fríos como estrategia de apuesta: en un sorteo aleatorio, patrones descriptivos pasados no garantizan una ventaja futura.
+
+## Uso responsable
+
+La aplicación es una herramienta educativa y descriptiva, no una guía para apostar. Los sorteos son aleatorios; los análisis históricos no permiten conocer ni garantizar resultados futuros. Verifica siempre las reglas vigentes con fuentes oficiales y respeta las condiciones de uso de la fuente consultada.
