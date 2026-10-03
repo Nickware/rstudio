@@ -1,169 +1,47 @@
-# Rstudio
+# Proyectos de análisis con R y Shiny
 
-RStudio es un entorno de desarrollo integrado (IDE) diseñado específicamente para trabajar con el lenguaje R, ampliamente utilizado en análisis estadístico, ciencia de datos y visualización de información.[3][7]
+Este repositorio reúne aplicaciones y prototipos independientes para explorar datos de running, biomecánica y resultados de Baloto, además de un espacio reservado para futuras herramientas en Python y scripts de instalación de RStudio para Linux. No es una única aplicación integrada; cada carpeta de proyecto tiene su propio código, requisitos e instrucciones.
 
-### Características principales
+## Proyectos
 
-- Consola integrada: Permite ejecutar directamente comandos y scripts de R, mostrando resultados en tiempo real como gráficos, tablas o resúmenes estadísticos.[7]
-- Editor de código avanzado: Ofrece resaltado de sintaxis, autocompletado, indentación inteligente y soporte para ejecución de fragmentos de código, lo que agiliza el trabajo con scripts complejos.[2]
-- Gestión del entorno de trabajo: Muestra de forma sencilla los objetos (variables, funciones, datos) y paquetes cargados, facilitando el control del flujo analítico.[5]
-- Visualización gráfica: Permite generar y visualizar gráficos directamente dentro de la interfaz, integrando librerías como ggplot2 o lattice.[6]
-- Integración con R Markdown: Soporta la creación de informes reproducibles que combinan texto, código y gráficos, exportables a HTML, PDF, Word o LaTeX.[3][6]
-- Compatibilidad con otros lenguajes: Aunque está centrado en R, también puede ejecutar código Python, SQL y otros lenguajes dentro del mismo entorno.[3]
-- Control de versiones: Integración nativa con Git y SVN, ideal para proyectos colaborativos y control de cambios.[6]
-- Entorno multiplataforma: disponible para Windows, macOS y Linux, además de una versión web (RStudio Server) que permite trabajar de manera remota desde un navegador.[4][2]
+| Carpeta | Propósito | Estado / punto de entrada |
+|---|---|---|
+| [`project-biomechanics`](project-biomechanics/Readme.md) | Importar y normalizar exportaciones Garmin para explorar métricas de running y biomecánica. | App Shiny en etapa inicial, centrada en ingesta. La guía incluye límites y perspectivas longitudinales. |
+| [`project-runner`](project-runner/Readme.md) | Dashboard para consultar y comparar sesiones Garmin a partir de FIT y CSV. | App Shiny con vistas de sesión, evolución, comparación, fisiología y biomecánica. |
+| [`project-test`](project-test/Readme.md) | Baloto Analyzer: exploración descriptiva de resultados históricos por número y posición. | Prototipo Shiny dependiente de una fuente web de terceros; pruebas estadísticas de la interfaz aún pendientes de conexión. |
+| [`project-python`](project-python/README.md) | Espacio propuesto para procesamiento, validación o análisis complementario en Python. | Actualmente no contiene implementación. El README perfila posibles colaboraciones con los proyectos R. |
+| [`rstudio-install`](rstudio-install/README.md) | Guías y scripts para instalar R y RStudio en distribuciones Linux. | Incluye rutas distintas para Debian/Ubuntu y Fedora; revisa sus efectos antes de ejecutarlos. |
 
-### Componentes de la interfaz
+## Cómo empezar
 
-RStudio organiza su entorno en paneles principales :[5][7]
+1. Elige el proyecto que corresponda a tu tarea y lee su README antes de instalar dependencias o cargar datos.
+2. Sigue las instrucciones de ejecución desde la carpeta del proyecto; las aplicaciones no comparten un comando de inicio común.
+3. Revisa los formatos de entrada y las limitaciones documentadas. En particular, los archivos Garmin pueden incluir coordenadas GPS y deben tratarse con cuidado.
 
-1. Editor de scripts: donde se escribe y guarda código reutilizable.
-2. Consola: para ejecutar comandos interactivos.
-3. Entorno de trabajo: muestra objetos, variables y su contenido.
-4. Visor de resultados: despliega gráficos, paquetes, archivos y documentación.
+Los README individuales documentan requisitos e instalación específicos. Los proyectos R usan R y Shiny; RStudio Desktop es opcional para ejecutarlos desde una terminal. Para instalar RStudio en Linux, consulta [`rstudio-install`](rstudio-install/README.md).
 
-### Aplicaciones comunes
+## Relación entre proyectos
 
-- Análisis de datos estadísticos: procesos de limpieza, modelado y exploración de datos.
-- Visualización de información: generación de gráficos interactivos y tableros integrados con librerías como Shiny.
-- Desarrollo científico y académico: creación de informes automatizados y reproducibles con R Markdown.
-- Machine Learning y Business Intelligence: integración con bibliotecas de R para modelado predictivo y análisis avanzado.[7][6]
+`project-runner` y `project-biomechanics` se ocupan de datos de running, pero son aplicaciones independientes con flujos de carga y análisis distintos. `project-python` plantea posibles utilidades compartidas, todavía no implementadas; un primer paso razonable sería acordar un formato de datos común antes de integrar procesos entre lenguajes.
 
-### En resumen
+Baloto Analyzer es un proyecto separado. Sus gráficos y estadísticas actuales son descriptivos: no permiten predecir ni garantizar resultados futuros de un sorteo aleatorio.
 
-RStudio es un IDE abierto, potente y versátil que ha consolidado su posición como herramienta estándar en la ciencia de datos moderna. Combina facilidad de uso, análisis avanzado, visualización e integración con múltiples lenguajes, todo dentro de un entorno intuitivo y reproducible que impulsa la productividad en proyectos de datos.[5][6][3]
+## Tecnologías
 
-[1](https://aprenderbigdata.com/rstudio/)
-[2](https://www.comparasoftware.co/rstudio-visualizacion-de-datos)
-[3](https://es.wikipedia.org/wiki/RStudio)
-[4](https://bookdown.org/jboscomendoza/r-principiantes4/rstudio-un-ide-para-r.html)
-[5](https://openwebinars.net/blog/introduccion-lenguaje-r/)
-[6](https://geekflare.com/es/best-ide-for-r-programming/)
-[7](https://www.datacamp.com/es/tutorial/r-studio-tutorial)
-[8](https://rpubs.com/Erialtx/1099460)
-[9](https://www.arsys.es/blog/rstudio)
+- R y Shiny para las aplicaciones interactivas.
+- `shinydashboard`, `plotly` y `DT` en distintos proyectos para navegación y visualización.
+- Python está contemplado como posible complemento, pero aún no hay código Python en el repositorio.
+- Git para versionar los proyectos y su documentación.
 
-# Paquetes mas populares
+## Datos, reproducibilidad y uso
 
-En R (usado desde RStudio) hay miles de paquetes, pero algunos se han vuelto casi “estándar” para ciencia de datos, visualización, reporting e interfaces web. A continuación están los más comunes y para qué se usan.
+No asumas que las aplicaciones comparten datos o resultados. Verifica la procedencia, unidades, fechas y campos disponibles en cada flujo. Algunas funciones dependen de exportaciones de Garmin o de páginas externas y pueden cambiar si sus formatos o estructuras cambian. Consulta el README específico para conocer esos límites.
 
-## Manipulación de datos
+Anonimiza los datos antes de compartirlos, especialmente si contienen rutas GPS o información identificable. Los análisis de running son exploratorios y no sustituyen evaluaciones médicas; el analizador de Baloto no es una estrategia de apuestas. Respeta las condiciones de uso de las fuentes y los datos utilizados.
 
-- dplyr: Gramática para manipular data frames con verbos como `select()`, `filter()`, `mutate()`, `summarise()` y `arrange()`, muy usada en casi cualquier proyecto de análisis.[4][5]
-- tidyr: Complementa a dplyr para “dar forma” a los datos (pivotar, separar columnas, unir columnas, etc.), parte fundamental del ecosistema tidyverse.[4]
-- data.table: Alternativa muy eficiente en memoria y velocidad para manejo de datos grandes; muy popular en entornos con millones de filas.[5][4]
+## Agente para el repositorio
 
-## Visualización
-
-- ggplot2: Paquete más popular para visualización en R; implementa una gramática de gráficos que permite construir visualizaciones complejas de forma declarativa.[5][4]
-- plotly: Extiende ggplot2 o trabaja directamente para generar gráficos interactivos en HTML, muy usado cuando se integran dashboards o reportes web.[5]
-- esquisse: Interfaz gráfica para crear gráficos ggplot2 arrastrando y soltando variables, ideal para explorar datos rápidamente en RStudio.[6]
-
-## Modelado y machine learning
-
-- caret: Framework unificado para entrenamiento, validación cruzada y comparación de muchos modelos de machine learning con una misma interfaz.[1][4][5]
-- randomForest: Implementación muy usada de bosques aleatorios para clasificación y regresión, con buen rendimiento en muchos problemas tabulares.[5]
-- kernlab: Paquete especializado en métodos de kernel, especialmente máquinas de soporte vectorial (SVM) con distintas funciones de kernel.[5]
-
-## Limpieza, fechas y valores perdidos
-
-- lubridate: Simplifica el trabajo con fechas y tiempos (parseo, extracción de componentes, suma/resta de periodos) de forma muy legible.[7][4]
-- naniar: Facilita el tratamiento y visualización de valores perdidos (NA, NaN, etc.), incluyendo gráficos para diagnosticar patrones de missing.[7]
-
-## Reportes, documentos y dashboards
-
-- rmarkdown / Quarto: Permiten combinar código, texto y resultados en un solo documento reproducible (HTML, PDF, Word, presentaciones y más).[6]
-- shiny: Paquete base para crear aplicaciones web interactivas directamente desde R, muy usado junto con RStudio.[6][5]
-- flexdashboard: Construye dashboards en R Markdown, integrando texto, tablas y gráficos estáticos o interactivos (por ejemplo, con plotly o shiny).[6]
-
-## Exploración rápida y utilidades
-
-- DataExplorer: Automatiza buena parte del análisis exploratorio de datos y genera reportes EDA casi con una sola línea de código.[6]
-- DataeditR: Permite editar data frames o tibbles de manera interactiva dentro de RStudio, útil para correcciones rápidas.[6]
-- pkgsearch: Facilita buscar paquetes relevantes en CRAN, ver metadatos y mantenerse al día con nuevas librerías.[6]
-
-[1](https://docs.kanaries.net/es/topics/R/6-r-lib-for-beginners)
-[2](https://www.youtube.com/watch?v=1nWeKk2BW7k)
-[3](https://www.reddit.com/r/RStudio/comments/1efppf2/what_are_your_must_have_r_packages/?tl=es-419)
-[4](https://datapeaker.com/big-data/8-paquetes-de-r-utiles-para-la-ciencia-de-datos-que-no-esta-utilizando-pero-deberia/)
-[5](https://datapeaker.com/big-data/los-mejores-paquetes-de-r-10-paquetes-r-que-todo-cientifico-de-datos-deberia-conocer/)
-[6](https://es.linkedin.com/pulse/los-mejores-paquetes-de-r-para-ahorrar-tiempo-y-esfuerzo-)
-[7](http://datanalisis.wikidot.com/paquetes-r)
-[8](https://deminions.com/lista-de-paquetes-de-r-domine-todos-los-paquetes-b%C3%A1sicos-de-la-programaci%C3%B3n-en-r/)
-[9](https://www.icesi.edu.co/editorial/empezando-usar-web/paquetes.html)
-[10](https://www.reddit.com/r/rstats/comments/1ak05u7/what_are_some_cool_r_packages_to_use_in_2024/?tl=es-es)
-
-# Tecnologías del ecosistema de datos con Rstudio
-
-RStudio se potencia muchísimo cuando lo combinas con otras tecnologías del ecosistema de datos, tanto dentro de R como en otros lenguajes.
-
-## Tecnologías dentro del ecosistema R
-
-- Shiny: Permite crear aplicaciones web interactivas directamente desde R, usando el código y resultados que ya trabajas en RStudio, ideal para tableros y prototipos rápidos. [quarto](https://quarto.org/docs/dashboards/interactivity/shiny-r.html)
-- R Markdown: Sirve para generar informes reproducibles que mezclan texto, código y resultados (gráficos, tablas) en formatos como HTML, PDF o Word. [cdr-book.github](https://cdr-book.github.io/cap-120007-informes.html)
-- Quarto: Es el sucesor moderno de R Markdown; permite publicar documentos, libros, dashboards y sitios web usando R, Python, Julia u otros lenguajes desde RStudio. [docs.posit](https://docs.posit.co/ide/user/ide/guide/documents/quarto-project.html)
-- Plumber: Convierte funciones de R en APIs HTTP, de modo que tus modelos o análisis se puedan consumir desde aplicaciones externas (móviles, web, otros servicios). [rstudio.r-universe](https://rstudio.r-universe.dev/packages)
-- Paquetes de dashboards (shinydashboard, bslib, etc.): Extienden Shiny para construir paneles más completos, con temas y componentes listos para uso empresarial. [rstudio.r-universe](https://rstudio.r-universe.dev/packages)
-
-## Integración con otros lenguajes y herramientas
-
-- Python (reticulate y RStudio Workbench): Puedes combinar R y Python en el mismo proyecto, e incluso usar Jupyter, VS Code y otros entornos bajo la misma infraestructura de RStudio/Posit Workbench. [youtube](https://www.youtube.com/watch?v=o36425S1-VU)
-- Jupyter Notebooks / JupyterLab: RStudio/Posit permite lanzar y gestionar entornos Jupyter junto con RStudio, facilitando equipos “bilingües” R–Python que comparten infraestructura y despliegue. [github](https://github.com/binder-examples/r_with_python)
-- VS Code: Se puede usar como editor dentro de la plataforma RStudio Workbench para quienes prefieren ese entorno pero necesitan desplegar resultados vía RStudio Connect. [youtube](https://www.youtube.com/watch?v=o36425S1-VU)
-
-## Publicación y despliegue
-
-- Posit Connect (antes RStudio Connect): Plataforma para publicar Shiny, R Markdown/Quarto, APIs Plumber, notebooks de Python y otros contenidos, y compartirlos con usuarios finales de negocio. [youtube](https://www.youtube.com/watch?v=o36425S1-VU)
-- rsconnect: Paquete R que automatiza el despliegue de documentos, apps y APIs desde RStudio hacia Posit Connect, shinyapps.io o RPubs. [rstudio](https://www.rstudio.com/wp-content/uploads/2019/01/Using-Python-with-RStudio-Connect-1.7.0.pdf)
-
-## Gestión de proyectos y colaboración
-
-- Git / GitHub / GitLab: RStudio se integra con sistemas de control de versiones para trabajar en equipo, versionar análisis y mantener trazabilidad del código.  
-- RStudio Package Manager / Posit Package Manager: Permite gestionar de forma centralizada paquetes de R y Python para equipos, garantizando reproducibilidad y control de versiones. [rstudio](https://www.rstudio.com/wp-content/uploads/2019/01/Using-Python-with-RStudio-Connect-1.7.0.pdf)
-
-# JavaScript con RStudio
-
-JavaScript se integra perfectamente con RStudio a través de R Markdown, Shiny y Quarto, permitiendo crear aplicaciones web interactivas, dashboards y documentos dinámicos sin salir del entorno R.
-
-## Integración directa en RStudio
-
-- R Markdown/HTML + JavaScript: Puedes incrustar código JavaScript directamente en documentos R Markdown que se renderizan como HTML. RStudio ofrece resaltado de sintaxis y previsualización en vivo para JS dentro de bloques `<script>`.
-- Shiny + htmlwidgets: Shiny apps de RStudio permiten usar widgets JavaScript (como `leaflet` para mapas, `dygraphs` para gráficos interactivos, `DT` para tablas) que se renderizan en el navegador pero se controlan desde código R.
-- Quarto: Similar a R Markdown pero más moderno, soporta JavaScript nativo en documentos, presentaciones y sitios web publicados desde RStudio.
-
-## Paquetes clave para JavaScript en RStudio
-
-- htmlwidgets: Framework que convierte librerías JavaScript populares (D3.js, Plotly.js, Three.js) en widgets reutilizables desde R. Instalas con `install.packages("htmlwidgets")`.
-- shinyjs: Extiende Shiny con funciones JavaScript como `show()`, `hide()`, `click()`, `delay()` para controlar la UI desde R.
-- DT (DataTables): Tablas interactivas con búsqueda, paginación y ordenamiento usando la librería JavaScript DataTables.
-- leaflet: Mapas interactivos basados en Leaflet.js, con zoom, capas y marcadores controlados desde R.
-- Plotly: Gráficos interactivos 2D/3D con zoom, hover y exportación, usando Plotly.js.
-- reactlog: Depurador visual para apps Shiny que usa JavaScript para mostrar el "reactivity graph".
-
-## Tecnologías JavaScript complementarias
-
-- D3.js: Para visualizaciones de datos personalizadas complejas (árboles, redes, flujos). Se usa vía `D3networkD3` o `networkD3`.
-- Three.js: Gráficos 3D WebGL. Disponible vía `rthreejs`.
-- Chart.js: Gráficos simples y responsivos con `highcharter` o `chartjsr`.
-- Bootstrap: Estilos CSS/JS responsivos para Shiny apps con `shinythemes` o `bslib`.
-
-## Ventajas de esta integración
-
-- Sin salir de RStudio: Todo el desarrollo (R + JS + CSS + HTML) en un solo IDE.
-- Reactivity bidireccional: Los datos cambian en R → UI se actualiza automáticamente vía JS.
-- Publicación fácil: Un clic publica a shinyapps.io, RPubs o Posit Connect.
-- Portabilidad: Funciona offline y se despliega como app web estándar.
-
-## Casos de uso reales
-
-- Dashboards ejecutivos: Shiny + Plotly + Bootstrap para KPIs interactivos.
-- Mapas epidemiológicos: leaflet con datos de R actualizados en tiempo real.
-- Tableros de datos masivos: DT con filtros JavaScript sobre millones de filas.
-- Simuladores financieros: Shiny + dygraphs para series temporales interactivas.
-
-> RStudio + JavaScript (vía Shiny y htmlwidgets) permite crear aplicaciones web modernas y profesionales directamente desde los análisis de datos en R, sin necesidad de aprender desarrollo web tradicional desde cero.
-
-En conjunto, estas tecnologías convierten a RStudio en el núcleo de un ecosistema completo: desarrollo (IDE), análisis (R/Python), comunicación (R Markdown/Quarto, Shiny), APIs (Plumber) y despliegue empresarial (Posit Connect).
+Para crear y probar en VS Code un agente mantenedor con permisos graduales, sigue la [guía paso a paso](docs/repo-agent/README.md).
 
 
 
